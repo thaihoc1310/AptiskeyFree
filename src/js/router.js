@@ -55,7 +55,7 @@ export function startRouter() {
     const href = anchor.getAttribute('href');
     if (!href?.startsWith('#/')) return;
     event.preventDefault();
-    window.location.href = `/${href}`;
+    window.location.hash = href;
   });
   window.addEventListener('hashchange', handleRoute);
   handleRoute();

@@ -402,14 +402,18 @@ function interceptLegacyNavigation() {
     if (!href || href.startsWith('http') || href.startsWith('mailto:')) return;
     if (href.startsWith('#/')) {
       event.preventDefault();
-      window.location.href = `/${href}`;
+      window.location.hash = href;
       return;
     }
     if (href.startsWith('#')) return;
     const mapped = mapLegacyPath(href);
     if (mapped !== href) {
       event.preventDefault();
-      window.location.href = mapped;
+      if (mapped.startsWith('/#') || mapped.startsWith('#')) {
+        window.location.hash = mapped.replace(/^\/?#/, '');
+      } else {
+        window.location.href = mapped;
+      }
     }
   };
   document.addEventListener('click', handler);
