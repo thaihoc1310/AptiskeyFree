@@ -5,9 +5,9 @@
   display: grid;
   gap: var(--space-10);
   grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
-  min-height: min(680px, calc(100vh - var(--header-height) - 48px));
+  min-height: auto;
   min-width: 0;
-  padding: var(--space-10) 0 var(--space-12);
+  padding: var(--space-4) 0 var(--space-8);
   position: relative;
 }
 
@@ -18,8 +18,8 @@
   border: 1px solid var(--border-light);
   border-radius: var(--radius-xl);
   content: '';
-  inset: var(--space-4) 0 auto 0;
-  min-height: 72%;
+  inset: var(--space-2) 0 auto 0;
+  min-height: 78%;
   opacity: 0.58;
   pointer-events: none;
   position: absolute;
@@ -61,10 +61,11 @@
   color: transparent;
   font-size: var(--fs-4xl);
   font-weight: var(--fw-semibold);
-  line-height: 1.02;
+  line-height: 1.15;
   margin-bottom: var(--space-5);
   max-width: 820px;
   overflow-wrap: break-word;
+  padding-top: 4px;
 }
 
 .gradient-text {

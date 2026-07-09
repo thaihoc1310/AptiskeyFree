@@ -89,7 +89,7 @@
   --glass-blur: blur(24px);
 
   /* ---- Typography ---- */
-  --font-family: 'Inter', 'Be Vietnam Pro', 'Geist Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family: 'Be Vietnam Pro', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
 
   --fs-xs: 0.75rem;
