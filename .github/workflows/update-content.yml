@@ -8,10 +8,6 @@ on:
   # Cho phép bấm nút chạy thủ công trên GitHub
   workflow_dispatch:
 
-  # Cho phép gọi từ nút "Cập nhật đề" trên giao diện web
-  repository_dispatch:
-    types: [run-update-script]
-
 jobs:
   update:
     runs-on: ubuntu-latest
