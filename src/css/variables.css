@@ -1,0 +1,196 @@
+/* ============================================
+   APTISKEY DESIGN SYSTEM - Linear Modern Tokens
+   ============================================ */
+
+:root {
+  color-scheme: dark;
+
+  /* ---- Core Palette ---- */
+  --primary: #5E6AD2;
+  --primary-light: #8B92EA;
+  --primary-dark: #4651B8;
+  --primary-gradient: linear-gradient(135deg, #5E6AD2 0%, #8B92EA 54%, #55D6BE 100%);
+
+  /* ---- Skill Accents ---- */
+  --accent-reading: #55D6BE;
+  --accent-reading-light: #9BE7D8;
+  --accent-listening: #FF9F6E;
+  --accent-listening-light: #FFD0B8;
+  --accent-speaking: #63A7FF;
+  --accent-speaking-light: #A7CBFF;
+  --accent-writing: #F472B6;
+  --accent-writing-light: #FDB0D8;
+  --accent-grammar: #F6C85F;
+  --accent-grammar-light: #FFE29B;
+
+  /* ---- Semantic ---- */
+  --success: #55D6BE;
+  --success-light: rgba(85, 214, 190, 0.14);
+  --error: #FF6B7A;
+  --error-light: rgba(255, 107, 122, 0.14);
+  --warning: #F6C85F;
+  --warning-light: rgba(246, 200, 95, 0.16);
+  --info: #63A7FF;
+  --info-light: rgba(99, 167, 255, 0.14);
+
+  /* ---- Surfaces ---- */
+  --bg-primary: #050506;
+  --bg-deep: #020203;
+  --bg-secondary: rgba(255, 255, 255, 0.05);
+  --bg-card: rgba(255, 255, 255, 0.055);
+  --bg-card-strong: rgba(255, 255, 255, 0.08);
+  --bg-sidebar: rgba(6, 7, 12, 0.88);
+  --bg-sidebar-hover: rgba(255, 255, 255, 0.07);
+  --bg-header: rgba(7, 8, 13, 0.72);
+  --bg-input: rgba(255, 255, 255, 0.065);
+  --select-menu-bg: #101117;
+  --select-menu-bg-hover: #1A1D29;
+  --select-menu-text: #F4F5F8;
+
+  --text-primary: #EDEDEF;
+  --text-secondary: #A8ADB7;
+  --text-muted: #757B88;
+  --text-sidebar: rgba(237, 237, 239, 0.72);
+  --text-sidebar-active: #FFFFFF;
+
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-light: rgba(255, 255, 255, 0.055);
+  --border-hover: rgba(255, 255, 255, 0.14);
+  --border-accent: rgba(94, 106, 210, 0.38);
+
+  /* ---- Shadows ---- */
+  --shadow-sm:
+    0 0 0 1px rgba(255, 255, 255, 0.055),
+    0 8px 22px rgba(0, 0, 0, 0.22);
+  --shadow-md:
+    0 0 0 1px rgba(255, 255, 255, 0.07),
+    0 18px 44px rgba(0, 0, 0, 0.28);
+  --shadow-lg:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 24px 70px rgba(0, 0, 0, 0.36),
+    0 0 70px rgba(94, 106, 210, 0.08);
+  --shadow-xl:
+    0 0 0 1px rgba(255, 255, 255, 0.1),
+    0 32px 90px rgba(0, 0, 0, 0.46),
+    0 0 100px rgba(85, 214, 190, 0.08);
+  --shadow-card: var(--shadow-md);
+  --shadow-card-hover:
+    0 0 0 1px rgba(255, 255, 255, 0.13),
+    0 24px 64px rgba(0, 0, 0, 0.42),
+    0 0 80px rgba(94, 106, 210, 0.12);
+  --shadow-accent:
+    0 0 0 1px rgba(94, 106, 210, 0.46),
+    0 10px 24px rgba(94, 106, 210, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+
+  /* ---- Glass ---- */
+  --glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025));
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-blur: blur(24px);
+
+  /* ---- Typography ---- */
+  --font-family: 'Inter', 'Be Vietnam Pro', 'Geist Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.25rem;
+  --fs-xl: 1.5rem;
+  --fs-2xl: 1.875rem;
+  --fs-3xl: 2.4rem;
+  --fs-4xl: clamp(2.5rem, 6vw, 4.9rem);
+
+  --fw-normal: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  --lh-tight: 1.08;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.7;
+
+  /* ---- Spacing ---- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* ---- Radius ---- */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* ---- Layout ---- */
+  --sidebar-width: 286px;
+  --sidebar-collapsed: 76px;
+  --header-height: 68px;
+  --content-max-width: 1240px;
+
+  /* ---- Transitions ---- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-fast: 160ms var(--ease-out);
+  --transition-base: 260ms var(--ease-out);
+  --transition-slow: 420ms var(--ease-out);
+  --transition-spring: 300ms var(--ease-out);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --bg-primary: #F6F7FB;
+  --bg-deep: #ECEFF6;
+  --bg-secondary: rgba(255, 255, 255, 0.82);
+  --bg-card: rgba(255, 255, 255, 0.86);
+  --bg-card-strong: #FFFFFF;
+  --bg-sidebar: rgba(255, 255, 255, 0.9);
+  --bg-sidebar-hover: rgba(15, 23, 42, 0.055);
+  --bg-header: rgba(255, 255, 255, 0.78);
+  --bg-input: rgba(15, 23, 42, 0.055);
+  --select-menu-bg: #FFFFFF;
+  --select-menu-bg-hover: #EEF1F8;
+  --select-menu-text: #171923;
+
+  --text-primary: #171923;
+  --text-secondary: #525866;
+  --text-muted: #8A92A3;
+  --text-sidebar: rgba(23, 25, 35, 0.72);
+  --text-sidebar-active: #171923;
+
+  --border-color: rgba(16, 24, 40, 0.1);
+  --border-light: rgba(16, 24, 40, 0.075);
+  --border-hover: rgba(16, 24, 40, 0.17);
+  --border-accent: rgba(94, 106, 210, 0.34);
+
+  --shadow-sm:
+    0 0 0 1px rgba(16, 24, 40, 0.045),
+    0 8px 22px rgba(16, 24, 40, 0.07);
+  --shadow-md:
+    0 0 0 1px rgba(16, 24, 40, 0.06),
+    0 18px 40px rgba(16, 24, 40, 0.1);
+  --shadow-lg:
+    0 0 0 1px rgba(16, 24, 40, 0.075),
+    0 24px 60px rgba(16, 24, 40, 0.13),
+    0 0 60px rgba(94, 106, 210, 0.08);
+  --shadow-xl:
+    0 0 0 1px rgba(16, 24, 40, 0.08),
+    0 30px 80px rgba(16, 24, 40, 0.18);
+  --shadow-card: var(--shadow-md);
+  --shadow-card-hover:
+    0 0 0 1px rgba(16, 24, 40, 0.1),
+    0 24px 56px rgba(16, 24, 40, 0.16),
+    0 0 60px rgba(94, 106, 210, 0.1);
+
+  --glass-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.68));
+  --glass-border: rgba(16, 24, 40, 0.08);
+}

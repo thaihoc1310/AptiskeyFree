@@ -1,0 +1,458 @@
+import { getCurrentPath } from './router.js';
+import heroImage from '../assets/hero.png';
+
+const NAV_ITEMS = [
+  { section: 'HỌC TẬP' },
+  {
+    icon: 'bi-book', label: 'Học Reading', color: 'var(--accent-reading)',
+    children: [
+      { icon: 'bi-question-circle', label: 'Học theo câu hỏi', path: '/reading/question' },
+      { icon: 'bi-stack', label: 'Học theo bộ đề', path: '/reading/bode' },
+      { icon: 'bi-lightbulb', label: 'Mẹo học nhanh', path: '/reading/meo' },
+    ]
+  },
+  {
+    icon: 'bi-headphones', label: 'Học Listening', color: 'var(--accent-listening)',
+    children: [
+      { icon: 'bi-question-circle', label: 'Học theo câu hỏi', path: '/listening/question' },
+      { icon: 'bi-stack', label: 'Học theo bộ đề', path: '/listening/bode' },
+      { icon: 'bi-lightbulb', label: 'Mẹo học nhanh', path: '/listening/meo' },
+    ]
+  },
+  {
+    icon: 'bi-pencil-square', label: 'Học Writing', color: 'var(--accent-writing)',
+    children: [
+      { icon: 'bi-stack', label: 'Học câu lạc bộ', path: '/writing/bode' },
+      { icon: 'bi-lightbulb', label: 'Mẹo viết thư', path: '/writing/meo' },
+    ]
+  },
+  {
+    icon: 'bi-mic', label: 'Học Speaking', color: 'var(--accent-speaking)',
+    children: [
+      { icon: 'bi-question-circle', label: 'Học theo câu hỏi', path: '/speaking/question' },
+      { icon: 'bi-lightbulb', label: 'Mẹo học nhanh', path: '/speaking/meo' },
+    ]
+  },
+  {
+    icon: 'bi-translate', label: 'Học Grammar', color: 'var(--accent-grammar)',
+    children: [
+      { icon: 'bi-stack', label: 'Học theo bộ đề', path: '/grammar/bode' },
+      { icon: 'bi-lightbulb', label: 'Mẹo ngữ pháp', path: '/grammar/meo' },
+    ]
+  },
+];
+
+export function renderSidebar() {
+  const currentPath = getCurrentPath();
+  let html = `
+    <aside class="sidebar" id="sidebar">
+      <a href="#/" class="sidebar-brand" aria-label="Về trang chủ">
+        <div class="sidebar-brand-logo"><img src="${heroImage}" alt="" /></div>
+        <span class="sidebar-brand-text">AptiskeyFree</span>
+      </a>
+      <nav class="sidebar-nav">`;
+
+  for (const item of NAV_ITEMS) {
+    if (item.section) {
+      html += `<div class="sidebar-section-title">${item.section}</div>`;
+      continue;
+    }
+    if (item.children) {
+      const isOpen = item.children.some(c => isPathActive(currentPath, c.path));
+      html += `<div class="nav-item${isOpen ? ' open' : ''}">
+        <a href="#" class="nav-parent" style="--item-color:${item.color}">
+          <i class="bi ${item.icon}" style="color:${item.color}"></i>
+          <span class="sidebar-text">${item.label}</span>
+          <i class="bi bi-chevron-right nav-arrow"></i>
+        </a>
+        <div class="nav-sub">`;
+      for (const child of item.children) {
+        const active = isPathActive(currentPath, child.path) ? ' active' : '';
+        html += `<div class="nav-item">
+          <a href="#${child.path}" class="nav-link${active}">
+            <i class="bi ${child.icon}"></i>
+            <span class="sidebar-text">${child.label}</span>
+          </a>
+        </div>`;
+      }
+      html += `</div></div>`;
+    } else if (item.external) {
+      html += `<div class="nav-item">
+        <a href="${item.external}" target="_blank" rel="noopener">
+          <i class="bi ${item.icon}"></i>
+          <span class="sidebar-text">${item.label}</span>
+        </a>
+      </div>`;
+    } else {
+      const active = isPathActive(currentPath, item.path) ? ' active' : '';
+      html += `<div class="nav-item">
+        <a href="#${item.path}" class="nav-link${active}">
+          <i class="bi ${item.icon}"></i>
+          <span class="sidebar-text">${item.label}</span>
+        </a>
+      </div>`;
+    }
+  }
+
+  html += `</nav></aside><div class="sidebar-overlay" id="sidebarOverlay"></div>`;
+  return html;
+}
+
+export function initSidebar() {
+  // Toggle parent menus
+  document.querySelectorAll('.nav-parent').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      el.closest('.nav-item').classList.toggle('open');
+    });
+  });
+
+  // Mobile toggle
+  const overlay = document.getElementById('sidebarOverlay');
+  if (overlay) {
+    overlay.addEventListener('click', () => {
+      document.getElementById('sidebar')?.classList.remove('mobile-open');
+    });
+  }
+
+  syncActiveNav();
+  window.addEventListener('hashchange', syncActiveNav);
+}
+
+function isPathActive(currentPath, itemPath) {
+  if (!itemPath) return false;
+  return currentPath === itemPath || currentPath.startsWith(`${itemPath}/`);
+}
+
+function syncActiveNav() {
+  const currentPath = getCurrentPath();
+  document.querySelectorAll('.sidebar .nav-link').forEach((link) => {
+    const href = link.getAttribute('href') || '';
+    const itemPath = href.startsWith('#') ? href.slice(1) : href;
+    link.classList.toggle('active', isPathActive(currentPath, itemPath));
+  });
+
+  document.querySelectorAll('.sidebar .nav-item.open').forEach((item) => {
+    item.classList.remove('open');
+  });
+
+  document.querySelectorAll('.sidebar .nav-link.active').forEach((link) => {
+    link.closest('.nav-sub')?.closest('.nav-item')?.classList.add('open');
+  });
+}
+
+export function renderHeader(title = 'Trang chủ', breadcrumbs = []) {
+  let bc = '';
+  for (const b of breadcrumbs) {
+    if (bc) bc += `<span class="sep">/</span>`;
+    if (b.path) bc += `<a href="#${b.path}">${b.label}</a>`;
+    else bc += `<span>${b.label}</span>`;
+  }
+
+  return `
+    <header class="header" id="header">
+      <div class="header-left">
+        <button class="header-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+          <i class="bi bi-list"></i>
+        </button>
+        <div class="breadcrumb">${bc}</div>
+      </div>
+      <div class="header-right">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <i class="bi bi-moon-stars"></i>
+        </button>
+        <div class="avatar-container">
+          <div class="header-avatar" id="userAvatar">K</div>
+          <div class="avatar-dropdown" id="avatarDropdown">
+            <div class="dropdown-header">Lịch sử cập nhật đề</div>
+            <div class="dropdown-body" id="dropdownUpdateLogs">
+              <div class="dropdown-loading">
+                <i class="bi bi-arrow-repeat spin"></i> Đang tải cập nhật...
+              </div>
+            </div>
+            <div class="dropdown-footer">
+              <button id="viewAllUpdatesBtn" class="view-all-btn">Xem tất cả</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>`;
+}
+
+export function initHeader() {
+  document.getElementById('sidebarToggle')?.addEventListener('click', () => {
+    const sidebar = document.getElementById('sidebar');
+    // Mobile: toggle mobile-open
+    if (window.innerWidth <= 992) {
+      sidebar?.classList.toggle('mobile-open');
+    } else {
+      sidebar?.classList.toggle('collapsed');
+      document.getElementById('header')?.classList.toggle('sidebar-collapsed');
+      document.querySelector('.app-main')?.classList.toggle('sidebar-collapsed');
+    }
+  });
+
+  document.getElementById('themeToggle')?.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    const icon = document.querySelector('#themeToggle i');
+    if (icon) icon.className = isDark ? 'bi bi-moon-stars' : 'bi bi-sun';
+  });
+
+  const avatar = document.getElementById('userAvatar');
+  const dropdown = document.getElementById('avatarDropdown');
+  
+  if (avatar && dropdown) {
+    avatar.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const isOpen = dropdown.classList.contains('show');
+      
+      if (isOpen) {
+        dropdown.classList.remove('show');
+        dropdown.style.display = 'none';
+      } else {
+        dropdown.classList.add('show');
+        dropdown.style.display = 'flex';
+        
+        try {
+          const { updates, isLive } = await getLatestUpdates();
+          renderDropdownLogs(updates);
+          
+          // Click handler for log items to open modal
+          document.querySelectorAll('.dropdown-log-item').forEach(el => {
+            el.addEventListener('click', () => {
+              dropdown.classList.remove('show');
+              dropdown.style.display = 'none';
+              showUpdatesModal(updates, isLive);
+            });
+          });
+
+          // Click handler for "Xem tất cả" button
+          const viewAllBtn = document.getElementById('viewAllUpdatesBtn');
+          if (viewAllBtn) {
+            viewAllBtn.onclick = () => {
+              dropdown.classList.remove('show');
+              dropdown.style.display = 'none';
+              showUpdatesModal(updates, isLive);
+            };
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      }
+    });
+    
+    // Close dropdown on click outside
+    document.addEventListener('click', (e) => {
+      if (!avatar.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.classList.remove('show');
+        dropdown.style.display = 'none';
+      }
+    });
+  }
+}
+
+// Fallback static updates in case fetch fails
+const FALLBACK_UPDATES = [
+  { date: "8/7/2026", text:  "Reading part1 (học theo câu hỏi): thêm bộ đề 33-35." },
+  { date: "7/7/2026", text:  "Reading part1 (học theo câu hỏi): thêm bộ đề 26-32." },
+  { date: "6/7/2026", text:  "Reading part1 (học theo câu hỏi): thêm bộ đề 21-25." },
+  { date: "5/7/2026", text:  "Reading part1 (học theo câu hỏi): thêm bộ đề 14-20." },
+  { date: "1/7/2026", text:  "Thêm 3 bộ đề listening mới (013, 014, 015) với Q14: New museum, Q15: Children & Tech / Environmental / Local Culture!." },
+  { date: "1/7/2026", text:  "Thêm chủ đề mẹo listening câu 15: Work Business / Business and Cultural!." },
+  { date: "25/6/2026", text:  "Thêm đề listening question 14: New museum in town!." },
+  { date: "25/6/2026", text:  "Thêm đề listening question 15: Local Culture diffirent!." },
+  { date: "18/6/2026", text:  "Thêm đề listening question 15: Environmental volunteer program!." },
+  { date: "12/6/2026", text:  "Thêm đề mới lis question 15 đề 13!." }
+];
+
+let cachedUpdates = null;
+let isCachedLive = false;
+
+async function getLatestUpdates() {
+  if (cachedUpdates) {
+    return { updates: cachedUpdates, isLive: isCachedLive };
+  }
+
+  try {
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const targetUrl = isLocal ? '/aptiskey-live/js/home.js' : 'https://aptiskey.com/js/home.js';
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 4000); // 4 seconds timeout
+    
+    const res = await fetch(targetUrl, { signal: controller.signal });
+    clearTimeout(timeoutId);
+    
+    if (!res.ok) throw new Error('Network response was not ok');
+    
+    const jsText = await res.text();
+    
+    const match = jsText.match(/const\s+updates\s*=\s*(\[[\s\S]*?\])\s*;/);
+    if (match) {
+      const parsed = new Function(`return ${match[1]}`)();
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        cachedUpdates = parsed;
+        isCachedLive = true;
+        return { updates: parsed, isLive: true };
+      }
+    }
+  } catch (err) {
+    console.warn('Failed to fetch live updates from aptiskey.com, using local fallback:', err);
+  }
+
+  return { updates: FALLBACK_UPDATES, isLive: false };
+}
+
+function renderDropdownLogs(updates) {
+  const container = document.getElementById('dropdownUpdateLogs');
+  if (!container) return;
+  
+  const recent = updates.slice(0, 5);
+  container.innerHTML = recent.map(item => {
+    // Strip HTML tags for clean text display inside dropdown
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = item.text;
+    const cleanText = tempDiv.textContent || tempDiv.innerText || '';
+    
+    return `
+      <div class="dropdown-log-item" style="cursor: pointer;">
+        <span class="log-date">${item.date}</span>
+        <span class="log-text">${cleanText}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function showUpdatesModal(updates, isLive = true) {
+  document.getElementById('updatesModal')?.remove();
+
+  const modalHtml = `
+    <div class="updates-modal-overlay" id="updatesModal">
+      <div class="updates-modal-container">
+        <div class="updates-modal-header">
+          <div class="updates-modal-title">
+            <i class="bi bi-journal-text" style="color: var(--primary-light);"></i>
+            <span>Lịch sử cập nhật đề</span>
+            ${isLive ? `
+              <span class="status-badge live">Trực tuyến</span>
+              <button id="runContentUpdateBtn" class="update-now-btn" title="Cập nhật đề mới từ aptiskey.com">
+                <i class="bi bi-cloud-arrow-down"></i> Cập nhật đề
+              </button>
+            ` : '<span class="status-badge offline">Nội bộ</span>'}
+          </div>
+          <button class="updates-close-btn" id="closeUpdatesModal">&times;</button>
+        </div>
+        <div class="updates-modal-body">
+          <div class="updates-timeline">
+            ${updates.map(item => `
+              <div class="timeline-item">
+                <div class="timeline-date">${item.date}</div>
+                <div class="timeline-content">${item.text}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.insertAdjacentHTML('beforeend', modalHtml);
+
+  // Close event listeners
+  const modal = document.getElementById('updatesModal');
+  const closeBtn = document.getElementById('closeUpdatesModal');
+  closeBtn?.addEventListener('click', () => modal?.remove());
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) modal.remove();
+  });
+
+  const updateBtn = document.getElementById('runContentUpdateBtn');
+  if (updateBtn) {
+    updateBtn.addEventListener('click', async () => {
+      const modalBody = modal.querySelector('.updates-modal-body');
+      if (!modalBody) return;
+      
+      const originalBodyHtml = modalBody.innerHTML;
+      
+      // Set loading state
+      modalBody.innerHTML = `
+        <div class="update-loading-overlay">
+          <i class="bi bi-arrow-repeat spin"></i>
+          <h4 style="font-weight: bold; margin-bottom: 8px; color: var(--text-primary);">Đang tải dữ liệu và cập nhật đề...</h4>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); max-width: 420px; margin: 0 auto; line-height: 1.5;">
+            Hệ thống đang chạy crawl tải file đề thi mới nhất từ aptiskey.com. Quá trình này hoàn toàn miễn phí và không cần cookie. Vui lòng đợi trong giây lát...
+          </p>
+        </div>
+      `;
+      
+      // Hide the update button to prevent double execution
+      updateBtn.style.display = 'none';
+      
+      try {
+        const response = await fetch('/api/run-update');
+        const result = await response.json();
+        
+        if (result.success) {
+          let fileListHtml = '';
+          if (result.files && result.files.length > 0) {
+            fileListHtml = `
+              <ul class="update-file-list">
+                ${result.files.map(f => `<li>${f}</li>`).join('')}
+              </ul>
+            `;
+          } else {
+            fileListHtml = `<p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 8px;">Không có file dữ liệu mới nào cần cập nhật.</p>`;
+          }
+          
+          modalBody.innerHTML = `
+            <div class="update-result-card">
+              <div class="update-result-header success">
+                <i class="bi bi-check-circle-fill"></i>
+                <span>Cập nhật hoàn tất thành công!</span>
+              </div>
+              <p style="font-size: 0.88rem; color: var(--text-secondary);">
+                Đã tải và cập nhật thành công <strong>${result.count} files</strong> đề thi và dữ liệu mới nhất.
+              </p>
+              ${fileListHtml}
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: var(--space-3); margin-top: var(--space-4);">
+              <button id="refreshAfterUpdateBtn" class="view-all-btn" style="width: auto; padding: 8px var(--space-6);">Xác nhận & Tải lại trang</button>
+            </div>
+          `;
+          
+          document.getElementById('refreshAfterUpdateBtn')?.addEventListener('click', () => {
+            window.location.reload();
+          });
+        } else {
+          throw new Error(result.error || 'Lỗi không xác định khi cập nhật.');
+        }
+      } catch (err) {
+        console.error('Update content error:', err);
+        modalBody.innerHTML = `
+          <div class="update-result-card error">
+            <div class="update-result-header error">
+              <i class="bi bi-exclamation-triangle-fill"></i>
+              <span>Cập nhật thất bại</span>
+            </div>
+            <p style="font-size: 0.88rem; color: var(--text-secondary);">
+              Gặp lỗi khi đang thực hiện crawl đề mới. Chi tiết lỗi:
+            </p>
+            <div style="background: rgba(0,0,0,0.3); padding: var(--space-3); border-radius: var(--radius-md); font-family: monospace; font-size: 0.78rem; color: #f87171; text-align: left; margin-top: var(--space-2); word-break: break-all;">
+              ${err.message}
+            </div>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: var(--space-3); margin-top: var(--space-4);">
+            <button id="retryUpdateBtn" class="view-all-btn" style="width: auto; padding: 8px var(--space-6); background: var(--text-muted);">Quay lại</button>
+          </div>
+        `;
+        
+        document.getElementById('retryUpdateBtn')?.addEventListener('click', () => {
+          modalBody.innerHTML = originalBodyHtml;
+          updateBtn.style.display = 'inline-flex';
+        });
+      }
+    });
+  }
+}
+

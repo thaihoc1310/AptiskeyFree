@@ -1,0 +1,33 @@
+# Dependency directories
+node_modules/
+
+# Build outputs
+dist/
+dist-ssr/
+
+# Local env files
+*.local
+
+# Editor / IDE settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temp files
+/tmp
+/temp
+/tmp_audio_urls.txt
+/public_audio_urls.txt
+
+# Local indexers
+.codegraph/
+
+
