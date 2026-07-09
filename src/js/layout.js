@@ -337,9 +337,6 @@ function showUpdatesModal(updates, isLive = true) {
             <span>Lịch sử cập nhật đề</span>
             ${isLive ? `
               <span class="status-badge live">Trực tuyến</span>
-              <button id="runContentUpdateBtn" class="update-now-btn" title="Cập nhật đề mới từ aptiskey.com">
-                <i class="bi bi-cloud-arrow-down"></i> Cập nhật đề
-              </button>
             ` : '<span class="status-badge offline">Nội bộ</span>'}
           </div>
           <button class="updates-close-btn" id="closeUpdatesModal">&times;</button>
@@ -366,93 +363,5 @@ function showUpdatesModal(updates, isLive = true) {
   modal?.addEventListener('click', (e) => {
     if (e.target === modal) modal.remove();
   });
-
-  const updateBtn = document.getElementById('runContentUpdateBtn');
-  if (updateBtn) {
-    updateBtn.addEventListener('click', async () => {
-      const modalBody = modal.querySelector('.updates-modal-body');
-      if (!modalBody) return;
-      
-      const originalBodyHtml = modalBody.innerHTML;
-      
-      // Set loading state
-      modalBody.innerHTML = `
-        <div class="update-loading-overlay">
-          <i class="bi bi-arrow-repeat spin"></i>
-          <h4 style="font-weight: bold; margin-bottom: 8px; color: var(--text-primary);">Đang tải dữ liệu và cập nhật đề...</h4>
-          <p style="font-size: 0.88rem; color: var(--text-secondary); max-width: 420px; margin: 0 auto; line-height: 1.5;">
-            Hệ thống đang chạy crawl tải file đề thi mới nhất từ aptiskey.com. Quá trình này hoàn toàn miễn phí và không cần cookie. Vui lòng đợi trong giây lát...
-          </p>
-        </div>
-      `;
-      
-      // Hide the update button to prevent double execution
-      updateBtn.style.display = 'none';
-      
-      try {
-        const response = await fetch('/api/run-update');
-        const result = await response.json();
-        
-        if (result.success) {
-          let fileListHtml = '';
-          if (result.files && result.files.length > 0) {
-            fileListHtml = `
-              <ul class="update-file-list">
-                ${result.files.map(f => `<li>${f}</li>`).join('')}
-              </ul>
-            `;
-          } else {
-            fileListHtml = `<p style="font-size: 0.88rem; color: var(--text-secondary); margin-top: 8px;">Không có file dữ liệu mới nào cần cập nhật.</p>`;
-          }
-          
-          modalBody.innerHTML = `
-            <div class="update-result-card">
-              <div class="update-result-header success">
-                <i class="bi bi-check-circle-fill"></i>
-                <span>Cập nhật hoàn tất thành công!</span>
-              </div>
-              <p style="font-size: 0.88rem; color: var(--text-secondary);">
-                Đã tải và cập nhật thành công <strong>${result.count} files</strong> đề thi và dữ liệu mới nhất.
-              </p>
-              ${fileListHtml}
-            </div>
-            <div style="display: flex; justify-content: flex-end; gap: var(--space-3); margin-top: var(--space-4);">
-              <button id="refreshAfterUpdateBtn" class="view-all-btn" style="width: auto; padding: 8px var(--space-6);">Xác nhận & Tải lại trang</button>
-            </div>
-          `;
-          
-          document.getElementById('refreshAfterUpdateBtn')?.addEventListener('click', () => {
-            window.location.reload();
-          });
-        } else {
-          throw new Error(result.error || 'Lỗi không xác định khi cập nhật.');
-        }
-      } catch (err) {
-        console.error('Update content error:', err);
-        modalBody.innerHTML = `
-          <div class="update-result-card error">
-            <div class="update-result-header error">
-              <i class="bi bi-exclamation-triangle-fill"></i>
-              <span>Cập nhật thất bại</span>
-            </div>
-            <p style="font-size: 0.88rem; color: var(--text-secondary);">
-              Gặp lỗi khi đang thực hiện crawl đề mới. Chi tiết lỗi:
-            </p>
-            <div style="background: rgba(0,0,0,0.3); padding: var(--space-3); border-radius: var(--radius-md); font-family: monospace; font-size: 0.78rem; color: #f87171; text-align: left; margin-top: var(--space-2); word-break: break-all;">
-              ${err.message}
-            </div>
-          </div>
-          <div style="display: flex; justify-content: flex-end; gap: var(--space-3); margin-top: var(--space-4);">
-            <button id="retryUpdateBtn" class="view-all-btn" style="width: auto; padding: 8px var(--space-6); background: var(--text-muted);">Quay lại</button>
-          </div>
-        `;
-        
-        document.getElementById('retryUpdateBtn')?.addEventListener('click', () => {
-          modalBody.innerHTML = originalBodyHtml;
-          updateBtn.style.display = 'inline-flex';
-        });
-      }
-    });
-  }
 }
 
