@@ -275,31 +275,39 @@ async function getLatestUpdates() {
     return { updates: cachedUpdates, isLive: isCachedLive };
   }
 
-  try {
-    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const targetUrl = isLocal ? '/aptiskey-live/js/home.js' : 'https://aptiskey.com/js/home.js';
-    
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 4000); // 4 seconds timeout
-    
-    const res = await fetch(targetUrl, { signal: controller.signal });
-    clearTimeout(timeoutId);
-    
-    if (!res.ok) throw new Error('Network response was not ok');
-    
-    const jsText = await res.text();
-    
-    const match = jsText.match(/const\s+updates\s*=\s*(\[[\s\S]*?\])\s*;/);
-    if (match) {
-      const parsed = new Function(`return ${match[1]}`)();
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        cachedUpdates = parsed;
-        isCachedLive = true;
-        return { updates: parsed, isLive: true };
+  // Try fetching from local crawled data first (works on both localhost and production)
+  const sources = ['/crawled_data/js/js_home.js'];
+  
+  // On localhost, also try the live proxy as fallback
+  const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+  if (isLocal) {
+    sources.push('/aptiskey-live/js/home.js');
+  }
+
+  for (const url of sources) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 4000);
+      
+      const res = await fetch(url, { signal: controller.signal });
+      clearTimeout(timeoutId);
+      
+      if (!res.ok) continue;
+      
+      const jsText = await res.text();
+      
+      const match = jsText.match(/const\s+updates\s*=\s*(\[[\s\S]*?\])\s*;/);
+      if (match) {
+        const parsed = new Function(`return ${match[1]}`)();
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          cachedUpdates = parsed;
+          isCachedLive = true;
+          return { updates: parsed, isLive: true };
+        }
       }
+    } catch (err) {
+      console.warn(`Failed to fetch updates from ${url}:`, err.message);
     }
-  } catch (err) {
-    console.warn('Failed to fetch live updates from aptiskey.com, using local fallback:', err);
   }
 
   return { updates: FALLBACK_UPDATES, isLive: false };
