@@ -5,9 +5,9 @@
   display: grid;
   gap: var(--space-10);
   grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
-  min-height: auto;
+  min-height: min(680px, calc(100vh - var(--header-height) - 48px));
   min-width: 0;
-  padding: var(--space-4) 0 var(--space-8);
+  padding: var(--space-10) 0 var(--space-12);
   position: relative;
 }
 
@@ -18,8 +18,8 @@
   border: 1px solid var(--border-light);
   border-radius: var(--radius-xl);
   content: '';
-  inset: var(--space-2) 0 auto 0;
-  min-height: 78%;
+  inset: var(--space-4) 0 auto 0;
+  min-height: 72%;
   opacity: 0.58;
   pointer-events: none;
   position: absolute;
@@ -52,7 +52,9 @@
   padding: 7px 12px;
 }
 
-.hero-kicker i { color: var(--accent-grammar); }
+.hero-kicker i {
+  color: var(--accent-grammar);
+}
 
 .hero-title {
   background: linear-gradient(180deg, #FFFFFF 0%, #EDEDEF 52%, rgba(237, 237, 239, 0.72) 100%);
@@ -61,11 +63,10 @@
   color: transparent;
   font-size: var(--fs-4xl);
   font-weight: var(--fw-semibold);
-  line-height: 1.15;
+  line-height: 1.02;
   margin-bottom: var(--space-5);
   max-width: 820px;
   overflow-wrap: break-word;
-  padding-top: 4px;
 }
 
 .gradient-text {
@@ -206,7 +207,9 @@
 }
 
 /* Skill Cards */
-.home-skills { margin-bottom: var(--space-8); }
+.home-skills {
+  margin-bottom: var(--space-8);
+}
 
 .skill-card {
   background:
@@ -308,7 +311,9 @@
 }
 
 /* Extra cards */
-.home-extras { margin-bottom: var(--space-8); }
+.home-extras {
+  margin-bottom: var(--space-8);
+}
 
 .extra-card {
   align-items: center;
@@ -331,7 +336,7 @@
   transform: translateY(-3px);
 }
 
-.extra-card > i {
+.extra-card>i {
   align-items: center;
   background: rgba(94, 106, 210, 0.13);
   border: 1px solid var(--border-accent);
