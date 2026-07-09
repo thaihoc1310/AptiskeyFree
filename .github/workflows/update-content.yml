@@ -1,0 +1,53 @@
+name: 🔄 Cập nhật đề thi từ Aptiskey.com
+
+on:
+  # Chạy tự động mỗi ngày lúc 2 giờ sáng (giờ VN = UTC+7 → 19:00 UTC ngày trước)
+  schedule:
+    - cron: '0 19 * * *'
+
+  # Cho phép bấm nút chạy thủ công trên GitHub
+  workflow_dispatch:
+
+  # Cho phép gọi từ nút "Cập nhật đề" trên giao diện web
+  repository_dispatch:
+    types: [run-update-script]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔧 Cài đặt curl
+        run: sudo apt-get update && sudo apt-get install -y curl
+
+      - name: 🚀 Chạy script cập nhật đề
+        run: |
+          chmod +x ./update-content.sh
+          ./update-content.sh
+
+      - name: 📊 Kiểm tra thay đổi
+        id: check
+        run: |
+          if [ -n "$(git status --porcelain public/crawled_data/)" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "📝 Phát hiện thay đổi:"
+            git status --short public/crawled_data/
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "✅ Không có thay đổi nào"
+          fi
+
+      - name: 💾 Commit & Push nếu có thay đổi
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/crawled_data/
+          CHANGED_COUNT=$(git diff --cached --name-only | wc -l)
+          git commit -m "chore: auto-update $CHANGED_COUNT exam files [$(date +'%Y-%m-%d %H:%M')]"
+          git push
