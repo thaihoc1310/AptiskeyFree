@@ -30,4 +30,10 @@ Thumbs.db
 # Local indexers
 .codegraph/
 
+# Legacy HTML templates (SPA uses JS databases instead)
+/public/crawled_data/html/
+
+# Agent documentation
+/implementation_plan.md
+
 
