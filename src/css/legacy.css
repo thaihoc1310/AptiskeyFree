@@ -26,6 +26,12 @@ body.focus-mode .app-content {
   max-width: 1360px;
 }
 
+#question2_topic,
+#question4_topic,
+#question5_topic {
+  color: var(--text-primary) !important;
+}
+
 .legacy-shell-header {
   align-items: center;
   display: flex;

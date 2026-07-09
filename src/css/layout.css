@@ -391,6 +391,10 @@ body.focus-mode .header-left {
   gap: 0;
 }
 
+body.focus-mode .header-avatar {
+  display: none !important;
+}
+
 .header-avatar {
   align-items: center;
   background:

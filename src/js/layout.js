@@ -366,7 +366,9 @@ function showUpdatesModal(updates, isLive = true) {
   const closeBtn = document.getElementById('closeUpdatesModal');
   closeBtn?.addEventListener('click', () => modal?.remove());
   modal?.addEventListener('click', (e) => {
-    if (e.target === modal) modal.remove();
+    if (e.target === modal || e.target.closest('a')) {
+      modal.remove();
+    }
   });
 }
 
