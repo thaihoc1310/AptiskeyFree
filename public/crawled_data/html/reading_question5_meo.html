@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    <title>Mẹo học câu 5 - Chỉ học đáp án</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --correct-color: #27ae60;
+            --wrong-color: #e74c3c;
+            --bg-color: #f4f7f6;
+            --blue-btn: #3498db;
+            --orange-btn: #e67e22;
+            --purple-btn: #9b59b6;
+            --gray-btn: #6c757d;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h2 { text-align: center; color: var(--primary-color); margin-bottom: 5px; }
+        .topic-display { text-align: center; color: var(--blue-btn); margin-bottom: 20px; font-weight: bold; font-size: 1.2em; }
+
+        .game-area {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .game-area { grid-template-columns: 1fr; }
+        }
+
+        .column-title {
+            font-weight: bold;
+            margin-bottom: 12px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 0.85em;
+            text-transform: uppercase;
+        }
+
+        #sortable-list { list-style: none; padding: 0; min-height: 100px; }
+
+        .sort-item {
+            background: #fff;
+            border: 2px solid #dee2e6;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: grab;
+            transition: 0.2s;
+            touch-action: manipulation;
+            user-select: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Thêm dấu chấm lửng bên trái để gợi ý kéo thả */
+        .sort-item::before {
+            content: "⠿";
+            margin-right: 15px;
+            color: #ccc;
+        }
+
+        .correct { background-color: #d4edda !important; border-color: var(--correct-color) !important; color: #155724; font-weight: 500; }
+        .wrong { background-color: #f8d7da !important; border-color: var(--wrong-color) !important; color: #721c24; }
+
+        #answer-column { display: none; list-style: none; padding: 0; }
+        .answer-item {
+            background: #f1f3f5;
+            border: 2px dashed #adb5bd;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.2s;
+            min-width: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px; /* Khoảng cách giữa icon và chữ */
+        }
+
+        .btn-check { background: var(--blue-btn); color: white; }
+        .btn-reset { background: var(--orange-btn); color: white; }
+        .btn-hint { background: var(--purple-btn); color: white; }
+        .btn-nav { background: var(--gray-btn); color: white; }
+        
+        button:hover { opacity: 0.9; transform: translateY(-1px); }
+        button:disabled { background: #e9ecef; color: #adb5bd; cursor: not-allowed; transform: none; }
+
+        /* Modal CSS */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 25px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px; top: 15px;
+            font-size: 24px; cursor: pointer; color: #999;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 id="practice-title">Practice: 1/3</h2>
+    <div class="topic-display" id="topic-name-display">Topic Name</div>
+    
+    <div class="game-area">
+        <div>
+            <div class="column-title">Thứ tự của bạn 👇</div>
+            <ul id="sortable-list"></ul>
+        </div>
+        <div>
+            <div class="column-title">Đáp án chuẩn 📖</div>
+            <ul id="answer-column"></ul>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn-nav" id="btn-back">
+            <i class="fas fa-chevron-left"></i> Back
+        </button>
+        <button class="btn-check" id="btn-check">
+            <i class="fas fa-check-circle"></i> Check Result
+        </button>
+        <button class="btn-reset" id="btn-reset">
+            <i class="fas fa-undo"></i> Làm lại
+        </button>
+        <button class="btn-hint" id="btn-hint">
+            <i class="fas fa-lightbulb"></i> Xem mẹo
+        </button>
+        <button class="btn-nav" id="btn-next">
+            Next <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+</div>
+
+<div id="hintModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-header">
+            <h3><i class="fas fa-graduation-cap"></i> Mẹo học đáp án</h3>
+        </div>
+        <div class="modal-body" id="hint-content" style="margin-top:15px; line-height:1.6;"></div>
+    </div>
+</div>
+
+<script src="js/reading_question/reading_question5_meo.js"></script>
+
+</body>
+</html>

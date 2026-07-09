@@ -202,23 +202,23 @@ export function initHeader() {
 
   const avatar = document.getElementById('userAvatar');
   const dropdown = document.getElementById('avatarDropdown');
-  
+
   if (avatar && dropdown) {
     avatar.addEventListener('click', async (e) => {
       e.stopPropagation();
       const isOpen = dropdown.classList.contains('show');
-      
+
       if (isOpen) {
         dropdown.classList.remove('show');
         dropdown.style.display = 'none';
       } else {
         dropdown.classList.add('show');
         dropdown.style.display = 'flex';
-        
+
         try {
           const { updates, isLive } = await getLatestUpdates();
           renderDropdownLogs(updates);
-          
+
           // Click handler for log items to open modal
           document.querySelectorAll('.dropdown-log-item').forEach(el => {
             el.addEventListener('click', () => {
@@ -242,7 +242,7 @@ export function initHeader() {
         }
       }
     });
-    
+
     // Close dropdown on click outside
     document.addEventListener('click', (e) => {
       if (!avatar.contains(e.target) && !dropdown.contains(e.target)) {
@@ -255,16 +255,16 @@ export function initHeader() {
 
 // Fallback static updates in case fetch fails
 const FALLBACK_UPDATES = [
-  { date: "8/7/2026", text:  "Reading part1 (học theo câu hỏi): thêm bộ đề 33-35." },
-  { date: "7/7/2026", text:  "Reading part1 (học theo câu hỏi): thêm bộ đề 26-32." },
-  { date: "6/7/2026", text:  "Reading part1 (học theo câu hỏi): thêm bộ đề 21-25." },
-  { date: "5/7/2026", text:  "Reading part1 (học theo câu hỏi): thêm bộ đề 14-20." },
-  { date: "1/7/2026", text:  "Thêm 3 bộ đề listening mới (013, 014, 015) với Q14: New museum, Q15: Children & Tech / Environmental / Local Culture!." },
-  { date: "1/7/2026", text:  "Thêm chủ đề mẹo listening câu 15: Work Business / Business and Cultural!." },
-  { date: "25/6/2026", text:  "Thêm đề listening question 14: New museum in town!." },
-  { date: "25/6/2026", text:  "Thêm đề listening question 15: Local Culture diffirent!." },
-  { date: "18/6/2026", text:  "Thêm đề listening question 15: Environmental volunteer program!." },
-  { date: "12/6/2026", text:  "Thêm đề mới lis question 15 đề 13!." }
+  { date: "8/7/2026", text: "Reading part1 (học theo câu hỏi): thêm bộ đề 33-35." },
+  { date: "7/7/2026", text: "Reading part1 (học theo câu hỏi): thêm bộ đề 26-32." },
+  { date: "6/7/2026", text: "Reading part1 (học theo câu hỏi): thêm bộ đề 21-25." },
+  { date: "5/7/2026", text: "Reading part1 (học theo câu hỏi): thêm bộ đề 14-20." },
+  { date: "1/7/2026", text: "Thêm 3 bộ đề listening mới (013, 014, 015) với Q14: New museum, Q15: Children & Tech / Environmental / Local Culture!." },
+  { date: "1/7/2026", text: "Thêm chủ đề mẹo listening câu 15: Work Business / Business and Cultural!." },
+  { date: "25/6/2026", text: "Thêm đề listening question 14: New museum in town!." },
+  { date: "25/6/2026", text: "Thêm đề listening question 15: Local Culture diffirent!." },
+  { date: "18/6/2026", text: "Thêm đề listening question 15: Environmental volunteer program!." },
+  { date: "12/6/2026", text: "Thêm đề mới lis question 15 đề 13!." }
 ];
 
 let cachedUpdates = null;
@@ -277,7 +277,7 @@ async function getLatestUpdates() {
 
   // Try fetching from local crawled data first (works on both localhost and production)
   const sources = ['/crawled_data/js/js_home.js'];
-  
+
   // On localhost, also try the live proxy as fallback
   const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
   if (isLocal) {
@@ -288,14 +288,14 @@ async function getLatestUpdates() {
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 4000);
-      
+
       const res = await fetch(url, { signal: controller.signal });
       clearTimeout(timeoutId);
-      
+
       if (!res.ok) continue;
-      
+
       const jsText = await res.text();
-      
+
       const match = jsText.match(/const\s+updates\s*=\s*(\[[\s\S]*?\])\s*;/);
       if (match) {
         const parsed = new Function(`return ${match[1]}`)();
@@ -316,14 +316,14 @@ async function getLatestUpdates() {
 function renderDropdownLogs(updates) {
   const container = document.getElementById('dropdownUpdateLogs');
   if (!container) return;
-  
+
   const recent = updates.slice(0, 5);
   container.innerHTML = recent.map(item => {
     // Strip HTML tags for clean text display inside dropdown
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = item.text;
     const cleanText = tempDiv.textContent || tempDiv.innerText || '';
-    
+
     return `
       <div class="dropdown-log-item" style="cursor: pointer;">
         <span class="log-date">${item.date}</span>
@@ -343,9 +343,6 @@ function showUpdatesModal(updates, isLive = true) {
           <div class="updates-modal-title">
             <i class="bi bi-journal-text" style="color: var(--primary-light);"></i>
             <span>Lịch sử cập nhật đề</span>
-            ${isLive ? `
-              <span class="status-badge live">Trực tuyến</span>
-            ` : '<span class="status-badge offline">Nội bộ</span>'}
           </div>
           <button class="updates-close-btn" id="closeUpdatesModal">&times;</button>
         </div>

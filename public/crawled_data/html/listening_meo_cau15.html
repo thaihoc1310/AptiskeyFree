@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aptis Listening - Mẹo Câu 15</title>
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #4f46e5; /* Indigo */
+            --secondary-color: #6366f1;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --male-color: #0ea5e9; /* Sky Blue */
+            --female-color: #ec4899; /* Pink */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+        }
+
+        /* Header Styling */
+        .custom-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .header-title {
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .back-link {
+            color: rgba(255, 255, 255, 0.9);
+            transition: all 0.2s;
+        }
+        .back-link:hover {
+            color: white;
+            transform: translateX(-3px);
+        }
+
+        /* Table Styling */
+        .card-table {
+            border: none;
+            border-radius: 12px;
+            overflow: hidden;
+            background: white;
+        }
+        
+        .table thead th {
+            background-color: #334155;
+            color: white;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            border: none;
+            vertical-align: middle;
+        }
+
+        .table td {
+            vertical-align: middle;
+            border-color: #e2e8f0;
+            padding: 1rem 0.75rem;
+        }
+
+        .topic-cell {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .answer-key {
+            font-family: monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #b91c1c;
+            background-color: #fef2f2;
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        /* Badges for Voices */
+        .badge-voice {
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+            width: 80px;
+            display: inline-block;
+            text-align: center;
+        }
+        .badge-male {
+            background-color: #e0f2fe;
+            color: #0284c7;
+            border: 1px solid #bae6fd;
+        }
+        .badge-female {
+            background-color: #fce7f3;
+            color: #db2777;
+            border: 1px solid #fbcfe8;
+        }
+
+        /* Footer Buttons */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            padding: 15px;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+        }
+        .btn-nav {
+            min-width: 120px;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+
+        /* Spacer for footer */
+        .content-spacer {
+            height: 80px;
+        }
+
+        /* Note highlight */
+        .note-text {
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.5;
+        }
+
+        /* Mobile Responsive adjustment */
+        .table-responsive {
+            border-radius: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="custom-header mb-5">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href="/listening_bode.html" class="text-decoration-none back-link d-flex align-items-center fs-5">
+            <i class="bi bi-arrow-left-circle-fill me-2"></i>
+            <span>Aptis Keys</span>
+        </a>
+        <div class="header-title fs-4">
+            <i class="bi bi-lightbulb-fill me-2 text-warning"></i>Mẹo Listening Câu 15
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-10">
+            <div class="alert alert-primary border-0 shadow-sm d-flex align-items-center" role="alert">
+                <i class="bi bi-info-circle-fill fs-3 me-3 text-primary"></i>
+                <div>
+                    <strong>Hướng dẫn học nhanh:</strong> Hãy chú ý giọng đọc đầu tiên (Nam hay Nữ) để chọn dãy đáp án phù hợp. Các ký tự <span class="badge bg-secondary">B</span> <span class="badge bg-secondary">M</span> <span class="badge bg-secondary">W</span> đại diện cho Both, Man, Woman.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-xl-10">
+            <div class="card shadow-lg card-table">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th class="text-center" width="5%">TT</th>
+                                <th width="20%">Topic (Chủ đề)</th>
+                                <th class="text-center" width="15%">Giọng trước</th>
+                                <th class="text-center" width="20%">Đáp án (Key)</th>
+                                <th>Ghi chú & Mẹo nhớ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="2" class="text-center fw-bold text-muted">1</td>
+                                <td rowspan="2" class="topic-cell">
+                                    <i class="bi bi-bank2 me-2"></i>Politics<br>
+                                    <small class="text-muted fw-normal">Chính trị</small>
+                                </td>
+                                <td class="text-center"><span class="badge-voice badge-male"><i class="bi bi-gender-male"></i> Nam</span></td>
+                                <td class="text-center"><span class="answer-key">B – M – W – B</span></td>
+                                <td class="note-text">Cả (B) đàn ông (M) và phụ nữ (W) đều (B) phải tôn trọng pháp luật.</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><span class="badge-voice badge-female"><i class="bi bi-gender-female"></i> Nữ</span></td>
+                                <td class="text-center"><span class="answer-key">B – W – M – B</span></td>
+                                <td class="note-text fst-italic text-muted">Đảo vị trí M và W ở câu trên.</td>
+                            </tr>
+
+                            <tr class="table-light">
+                                <td rowspan="2" class="text-center fw-bold text-muted">2</td>
+                                <td rowspan="2" class="topic-cell">
+                                    <i class="bi bi-laptop me-2"></i>IT & Tech<br>
+                                    <small class="text-muted fw-normal">Thông tin & Công nghệ</small>
+                                </td>
+                                <td class="text-center"><span class="badge-voice badge-male"><i class="bi bi-gender-male"></i> Nam</span></td>
+                                <td class="text-center"><span class="answer-key">M – W – W – B</span></td>
+                                <td class="note-text">Đàn ông (M) chê phụ nữ (W) kém công nghệ, nhưng phụ nữ (W) nghĩ cả 2 (B) đều giỏi.</td>
+                            </tr>
+                            <tr class="table-light">
+                                <td class="text-center"><span class="badge-voice badge-female"><i class="bi bi-gender-female"></i> Nữ</span></td>
+                                <td class="text-center"><span class="answer-key">W – M – M – B</span></td>
+                                <td class="note-text fst-italic text-muted">Đảo vị trí M và W ở câu trên.</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="2" class="text-center fw-bold text-muted">3</td>
+                                <td rowspan="2" class="topic-cell">
+                                    <i class="bi bi-palette me-2"></i>Arts<br>
+                                    <small class="text-muted fw-normal">Nghệ thuật</small>
+                                </td>
+                                <td class="text-center"><span class="badge-voice badge-male"><i class="bi bi-gender-male"></i> Nam</span></td>
+                                <td class="text-center"><span class="answer-key">M – W – B – W</span></td>
+                                <td class="note-text">Chàng trai (M) và cô gái (W) cùng nhau (B) nhảy múa, nhưng cô gái (W) rời đi khi tuổi đời còn rất trẻ.</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><span class="badge-voice badge-female"><i class="bi bi-gender-female"></i> Nữ</span></td>
+                                <td class="text-center"><span class="answer-key">W – M – B – M</span></td>
+                                <td class="note-text fst-italic text-muted">Đảo vị trí M và W ở câu trên.</td>
+                            </tr>
+
+                            <tr class="table-light">
+                                <td rowspan="2" class="text-center fw-bold text-muted">4</td>
+                                <td rowspan="2" class="topic-cell">
+                                    <i class="bi bi-music-note-beamed me-2"></i>Music<br>
+                                    <small class="text-muted fw-normal">Âm nhạc & Ca sĩ</small>
+                                </td>
+                                <td class="text-center"><span class="badge-voice badge-male"><i class="bi bi-gender-male"></i> Nam</span></td>
+                                <td class="text-center"><span class="answer-key">M – B – W – B</span></td>
+                                <td class="note-text">Đàn ông (M) thích cả (B) âm nhạc và ca sĩ. Phụ nữ (W) cũng thích cả (B) âm nhạc và ca sĩ.</td>
+                            </tr>
+                            <tr class="table-light">
+                                <td class="text-center"><span class="badge-voice badge-female"><i class="bi bi-gender-female"></i> Nữ</span></td>
+                                <td class="text-center"><span class="answer-key">W – B – M – B</span></td>
+                                <td class="note-text fst-italic text-muted">Đảo vị trí M và W ở câu trên.</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="2" class="text-center fw-bold text-muted">5</td>
+                                <td rowspan="2" class="topic-cell">
+                                    <i class="bi bi-mortarboard me-2"></i>University<br>
+                                    <small class="text-muted fw-normal">Trường đại học</small>
+                                </td>
+                                <td class="text-center"><span class="badge-voice badge-male"><i class="bi bi-gender-male"></i> Nam</span></td>
+                                <td class="text-center"><span class="answer-key">B – W – M – W</span></td>
+                                <td class="note-text">Bố (M) đưa con gái (W) đi học, nhưng đến trường thì người yêu (M) đưa con gái (W) đi chơi.</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><span class="badge-voice badge-female"><i class="bi bi-gender-female"></i> Nữ</span></td>
+                                <td class="text-center"><span class="answer-key">B – M – W – M</span></td>
+                                <td class="note-text fst-italic text-muted">Đảo vị trí M và W ở câu trên.</td>
+                            </tr>
+
+                            <tr class="table-light">
+                                <td rowspan="2" class="text-center fw-bold text-muted">6</td>
+                                <td rowspan="2" class="topic-cell">
+                                    <i class="bi bi-tree me-2"></i>Urban Farming<br>
+                                    <small class="text-muted fw-normal">Nông nghiệp đô thị</small>
+                                </td>
+                                <td class="text-center"><span class="badge-voice badge-male"><i class="bi bi-gender-male"></i> Nam</span></td>
+                                <td class="text-center"><span class="answer-key">W – B – M – B</span></td>
+                                <td class="note-text">Phụ nữ (W) nói cả (B) đàn ông (M) và phụ nữ đều (B) phải làm ruộng.</td>
+                            </tr>
+                            <tr class="table-light">
+                                <td class="text-center"><span class="badge-voice badge-female"><i class="bi bi-gender-female"></i> Nữ</span></td>
+                                <td class="text-center"><span class="answer-key">M – B – W – B</span></td>
+                                <td class="note-text fst-italic text-muted">Đảo vị trí M và W ở câu trên.</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="2" class="text-center fw-bold text-muted">7</td>
+                                <td rowspan="2" class="topic-cell">
+                                    <i class="bi bi-building me-2"></i>Local Center<br>
+                                    <small class="text-muted fw-normal">Trung tâm cộng đồng</small>
+                                </td>
+                                <td class="text-center"><span class="badge-voice badge-male"><i class="bi bi-gender-male"></i> Nam</span></td>
+                                <td class="text-center"><span class="answer-key">M – B – W – W</span></td>
+                                <td class="note-text">Mẹ (M) bảo (B) Win (W) tìm em gái (W) ở trung tâm cộng đồng.</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><span class="badge-voice badge-female"><i class="bi bi-gender-female"></i> Nữ</span></td>
+                                <td class="text-center"><span class="answer-key">W – B – M – M</span></td>
+                                <td class="note-text fst-italic text-muted">Đảo vị trí M và W ở câu trên.</td>
+                            </tr>
+
+                            <tr class="table-light">
+                                <td rowspan="2" class="text-center fw-bold text-muted">8</td>
+                                <td rowspan="2" class="topic-cell">
+                                    <i class="bi bi-pencil-ruler me-2"></i>Design<br>
+                                    <small class="text-muted fw-normal">Thiết kế cộng đồng</small>
+                                </td>
+                                <td class="text-center"><span class="badge-voice badge-male"><i class="bi bi-gender-male"></i> Nam</span></td>
+                                <td class="text-center"><span class="answer-key">B – W – M – B</span></td>
+                                <td class="note-text">Bố (B) Win (W) muốn (M) bán (B) bản vẽ thiết kế nhà.</td>
+                            </tr>
+                            <tr class="table-light">
+                                <td class="text-center"><span class="badge-voice badge-female"><i class="bi bi-gender-female"></i> Nữ</span></td>
+                                <td class="text-center"><span class="answer-key">B – M – W – B</span></td>
+                                <td class="note-text fst-italic text-muted">Đảo vị trí M và W ở câu trên.</td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-center fw-bold text-muted">9</td>
+                                <td class="topic-cell">
+                                    <i class="bi bi-gem me-2"></i>Beauty<br>
+                                    <small class="text-muted fw-normal">Sắc đẹp</small>
+                                </td>
+                                <td class="text-center"><span class="badge-voice badge-female"><i class="bi bi-gender-female"></i> Nữ</span></td>
+                                <td class="text-center"><span class="answer-key">M – W – B – W</span></td>
+                                <td class="note-text text-danger">
+                                    <i class="bi bi-exclamation-triangle-fill me-1"></i>Chỉ có phiên bản giọng Nữ.<br>
+                                    <span class="text-muted small">Chàng trai (M) đưa cô gái (W) đi làm đẹp, cuối cùng cả hai (B) bị bà chủ tiêm (W) lừa bán sang campuchia.</span>
+                                </td>
+                            </tr>
+
+                            <tr class="table-light">
+                                <td class="text-center fw-bold text-muted">10</td>
+                                <td class="topic-cell">
+                                    <i class="bi bi-briefcase me-2"></i>Workplace<br>
+                                    <small class="text-muted fw-normal">Nơi làm việc</small>
+                                </td>
+                                <td class="text-center"><span class="badge-voice badge-female"><i class="bi bi-gender-female"></i> Nữ</span></td>
+                                <td class="text-center"><span class="answer-key">M – W – B – M</span></td>
+                                <td class="note-text text-danger">
+                                    <i class="bi bi-exclamation-triangle-fill me-1"></i>Chỉ có phiên bản giọng Nữ.<br>
+                                    <span class="text-muted small">Người đàn ông (M) trách người phụ nữ (W) lười làm việc, cả hai (B) sống nghèo khổ, cuối cùng người đàn ông (M) bỏ đi.</span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td class="text-center fw-bold text-muted">11</td>
+                                <td class="topic-cell">
+                                    <i class="bi bi-film me-2"></i>Actor<br>
+                                    <small class="text-muted fw-normal">Diễn viên</small>
+                                </td>
+                                <td class="text-center" colspan="2">
+                                    <span class="answer-key bg-warning text-dark border border-warning">M – W – B – B</span>
+                                </td>
+                                <td class="note-text">
+                                    <strong>Mẹo:</strong> "Mẹ Win Bừa Bộn" (MWBB). - Nam hay nữ nói trước đều chọn đáp án này<br>
+                                    <span class="badge bg-success">Chọn như trên thì trúng 3 câu trong tổng 4 câu</span>
+                                </td>
+                            </tr>
+
+                            <tr class="table-light">
+                                <td class="text-center fw-bold text-muted">12</td>
+                                <td class="topic-cell">
+                                    <i class="bi bi-wifi me-2"></i>Internet<br>
+                                    <small class="text-muted fw-normal">Mạng Internet</small>
+                                </td>
+                                <td class="text-center" colspan="2">
+                                    <span class="answer-key bg-warning text-dark border border-warning">B – W – B – B</span>
+                                </td>
+                                <td class="note-text">
+                                    <strong>Mẹo:</strong> "Bố Win Bừa Bộn" (BWBB). - Nam hay nữ nói trước đều chọn đáp án này<br>
+                                    <span class="badge bg-success">Chọn như trên thì trúng 3 câu trong tổng 4 câu</span>
+                                </td>
+                            </tr>
+
+                             <tr class="table-light">
+                                <td rowspan="2" class="text-center fw-bold text-muted">13</td>
+                                <td rowspan="2" class="topic-cell">
+                                    <i class="bi bi-house-door-fill me-2"></i>Homeschooling<br>
+                                    <small class="text-muted fw-normal">Học tại nhà</small>
+                                </td>
+                                <td class="text-center"><span class="badge-voice badge-male"><i class="bi bi-gender-female"></i> Nữ</span></td>
+                                <td class="text-center"><span class="answer-key">M – W – W– B</span></td>
+                                <td class="note-text">Mình (M) vẫn (W) viết (W) bài (B) cho trường học.</td>
+                            </tr>
+                            <tr class="table-light">
+                                <td class="text-center"><span class="badge-voice badge-female"><i class="bi bi-gender-male"></i> Nam</span></td>
+                                <td class="text-center"><span class="answer-key">W – M – M – B</span></td>
+                                <td class="note-text fst-italic text-muted">Đảo vị trí M và W ở câu trên.</td>
+                            </tr>
+
+                             <tr>
+                                <td rowspan="2" class="text-center fw-bold text-muted">14</td>
+                                <td rowspan="2" class="topic-cell">
+                                    <i class="bi bi-laptop me-2"></i>Children and Teenagers with Technology<br>
+                                    <small class="text-muted fw-normal">Trẻ em và thanh thiếu niên với công nghệ</small>
+                                </td>
+                                <td class="text-center"><span class="badge-voice badge-male"><i class="bi bi-gender-male"></i> Nam</span></td>
+                                <td class="text-center"><span class="answer-key">B – B – M – W</span></td>
+                                <td class="note-text">công nghệ biến (B) bạn (B) mê (M) Web (W)</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><span class="badge-voice badge-female"><i class="bi bi-gender-female"></i> Nữ</span></td>
+                                <td class="text-center"><span class="answer-key">B – B – W – M</span></td>
+                                <td class="note-text fst-italic text-muted">Đảo vị trí M và W ở câu trên.</td>
+                            </tr>
+
+                             <tr class="table-light">
+                                <td rowspan="2" class="text-center fw-bold text-muted">15</td>
+                                <td rowspan="2" class="topic-cell">
+                                    <i class="bi bi-recycle me-2"></i>Environmental volunteer program<br>
+                                    <small class="text-muted fw-normal">Chương trình tình nguyện môi trường</small>
+                                </td>
+                                <td class="text-center"><span class="badge-voice badge-male"><i class="bi bi-gender-male"></i> Nam</span></td>
+                                <td class="text-center"><span class="answer-key">B – M – W – M</span></td>
+                                <td class="note-text">Bố (B) muốn (M) con gái (W) và con trai (M) tham gia chương trình tình nguyện môi trường.</td>
+                            </tr>
+                            <tr class="table-light">
+                                <td class="text-center"><span class="badge-voice badge-female"><i class="bi bi-gender-female"></i> Nữ</span></td>
+                                <td class="text-center"><span class="answer-key">B – W – M – W</span></td>
+                                <td class="note-text fst-italic text-muted">Đảo vị trí M và W ở câu trên.</td>
+                            </tr>
+
+                            <tr>
+                                <td rowspan="2" class="text-center fw-bold text-muted">16</td>
+                                <td rowspan="2" class="topic-cell">
+                                    <i class="bi bi-globe2 me-2"></i>Local Culture diffirent<br>
+                                    <small class="text-muted fw-normal">Văn hóa địa phương khác biệt</small>
+                                </td>
+                                <td class="text-center"><span class="badge-voice badge-male"><i class="bi bi-gender-male"></i> Nam</span></td>
+                                <td class="text-center"><span class="answer-key">M – B – W – W</span></td>
+                                <td class="note-text">Đàn ông (M) không nên bắt (B) hai phụ nữ (WW) phải giống nhau khi văn hóa của họ không giống nhau.</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center"><span class="badge-voice badge-female"><i class="bi bi-gender-female"></i> Nữ</span></td>
+                                <td class="text-center"><span class="answer-key">W – B – M – M</span></td>
+                                <td class="note-text fst-italic text-muted">Đảo vị trí M và W ở câu trên.</td>
+                            </tr>
+
+                            <tr class="table-light">
+                                <td rowspan="2" class="text-center fw-bold text-muted">17</td>
+                                <td rowspan="2" class="topic-cell">
+                                    <i class="bi bi-briefcase-fill me-2"></i>Work Business / Business and Cultural<br>
+                                    <small class="text-muted fw-normal">Kinh doanh & Văn hóa công sở</small>
+                                </td>
+                                <td class="text-center"><span class="badge-voice badge-male"><i class="bi bi-gender-male"></i> Nam</span></td>
+                                <td class="text-center"><span class="answer-key">W – B – M – M</span></td>
+                                <td class="note-text">Một phụ nữ (W) và (B) hai người đàn ông (M) (M) cùng khởi nghiệp kinh doanh.</td>
+                            </tr>
+                            <tr class="table-light">
+                                <td class="text-center"><span class="badge-voice badge-female"><i class="bi bi-gender-female"></i> Nữ</span></td>
+                                <td class="text-center"><span class="answer-key">M – B – W – W</span></td>
+                                <td class="note-text fst-italic text-muted">Đảo vị trí M và W ở câu trên.</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content-spacer"></div>
+</div>
+
+<div class="footer-nav">
+    <button class="btn btn-outline-secondary btn-nav" id="backButton">
+        <i class="bi bi-arrow-left me-1"></i> Back
+    </button>
+    <button class="btn btn-primary btn-nav" id="nextButton">
+        Next <i class="bi bi-arrow-right ms-1"></i>
+    </button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Giữ nguyên logic JS cũ của bạn nếu có, đây là demo action cơ bản
+    document.getElementById('backButton').addEventListener('click', function() {
+        // Logic quay lại
+        window.history.back();
+    });
+    
+    document.getElementById('nextButton').addEventListener('click', function() {
+        // Logic tiếp theo
+        alert("Không có phần sau!");
+    });
+</script>
+
+</body>
+</html>

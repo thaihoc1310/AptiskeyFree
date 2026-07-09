@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Aptis keys - Mẹo viết thư</title>
+      <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+  <meta name="description" content="Form mẫu APTIS Writing Q4 (thư gửi bạn & thư gửi quản lý) với ghi chú từ vựng opinion và ví dụ Book Club. Giao diện tiếng Việt; nội dung thư bằng tiếng Anh.">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { scroll-behavior: smooth; }
+    .toc { position: sticky; top: 1rem; max-height: calc(100vh - 2rem); overflow:auto; }
+    .note { background:#f8f9fa; border:1px solid #e9ecef; padding:.75rem; border-radius:.5rem; }
+    .section-title { scroll-margin-top: 80px; }
+    .back-to-top { position: fixed; bottom: 20px; right: 20px; display:none; z-index:1030; }
+    .hl { color:#dc3545; font-weight:700; } /* đỏ + đậm */
+    .template-card { white-space: pre-line; } /* xuống dòng theo \n */
+    .copy-btn { --bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .85rem; }
+    .tip { cursor: help; text-decoration: underline dotted; }
+  </style>
+  
+</head>
+<body data-bs-spy="scroll" data-bs-target="#tocList" tabindex="0">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/home.html">Aptis keys</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Bật tắt menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMain">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#gioi-thieu">Giới thiệu</a></li>
+          <li class="nav-item"><a class="nav-link" href="#forms">Form mẫu</a></li>
+          <li class="nav-item"><a class="nav-link" href="#vi-du">Ví dụ: Book Club</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container my-4">
+    <div class="row g-4">
+      <!-- Sidebar TOC -->
+      <aside class="col-lg-3">
+        <div class="card toc">
+          <div class="card-body">
+            <h6 class="card-title mb-3">Mục lục</h6>
+            <div class="list-group list-group-flush" id="tocList">
+              <a class="list-group-item list-group-item-action" href="#gioi-thieu">Giới thiệu</a>
+              <a class="list-group-item list-group-item-action" href="#forms">Form mẫu</a>
+              <a class="list-group-item list-group-item-action" href="#vi-du">Ví dụ Book Club</a>
+            </div>
+            <hr class="my-3">
+            <div class="d-grid gap-2">
+              <button class="btn btn-outline-secondary btn-sm" id="btnPrint">In nhanh</button>
+            </div>
+            <div class="mt-3">
+              <input id="filterInput" class="form-control form-control-sm" placeholder="Tìm theo từ khóa…">
+              <small class="text-muted">Gõ để lọc phần nội dung hiển thị.</small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <section class="col-lg-9" id="content">
+        <!-- Intro -->
+        <section id="gioi-thieu" class="mb-4 filter-section">
+          <div class="alert alert-info mb-3">
+            <strong>Mẹo nhanh:</strong> Q4 có 2 email: một email ngắn (≈50 từ) cho <em>bạn cùng CLB</em> và một email dài (120–150 từ) cho <em>quản lý CLB</em>. Thay nội dung trong các ô <span>[<span class="hl">ngoặc vuông</span>]</span>. Di chuột lên <span class="tip">opinion 1/2</span> để xem gợi ý từ.
+          </div>
+<p class="mb-0">
+  Đây là 1 <strong>form mẫu viết thư</strong>, bạn có thể sử dụng 
+  <a href="https://chat.openai.com/" target="_blank">ChatGPT</a> 
+  để hỗ trợ <em>xào nấu lại</em> cho khác đi, biến thành phiên bản <strong>của riêng bạn</strong>.  
+</p>
+
+
+        </section>
+
+        <!-- Forms -->
+        <section id="forms" class="mb-4 filter-section">
+          <h3 class="section-title">Form mẫu</h3>
+
+          <!-- Friend Form -->
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h5 class="mb-0">1) Email cho bạn (≈50 từ, tiếng Anh)</h5>
+            <button class="btn btn-outline-primary copy-btn" data-copy-target="#formFriend">Sao chép</button>
+          </div>
+          <div class="card template-card mb-4" id="formFriend">
+            <div class="card-body">
+Hi [<span class="hl">Tên của người bạn - tiếng việt không dấu</span>],  
+I’ve just read the notice about [<span class="hl">sự kiện (nội dung câu hỏi)</span>]. Honestly, I feel [<span class="hl">delighted / disappointed / surprised</span>] because I had expected [<span class="hl">suy nghĩ của bạn</span>].  
+For now, I plan to [<span class="hl">kiến nghị của bạn</span>]. What do you think?  
+Best,  
+[<span class="hl">Tên bạn</span>]
+            </div>
+          </div>
+
+          <!-- Manager Form -->
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h5 class="mb-0">2) Email cho quản lý CLB (120–150 từ, tiếng Anh)</h5>
+            <button class="btn btn-outline-primary copy-btn" data-copy-target="#formManager">Sao chép</button>
+          </div>
+          <div class="card template-card" id="formManager">
+            <div class="card-body">
+Dear [<span class="hl">Sir/Madam</span>],  
+My name is [<span class="hl">Tên đầy đủ của bạn</span>], and I am a member of [<span class="hl">Tên câu lạc bộ</span>]. I’m writing to share my opinion about the recent announcement regarding [<span class="hl">đề bài</span>].
+
+In my view, the plan is [<span class="hl tip" data-bs-toggle="tooltip" data-bs-placement="top" title="excellent, promising, practical, meaningful, useful, valuable, beneficial, inspiring, innovative, creative, effective, important, necessary; (negative) unclear, unrealistic, unnecessary, unhelpful, confusing, ineffective, disappointing, problematic, risky">opinion 1</span>] and it also makes me feel [<span class="hl tip" data-bs-toggle="tooltip" data-bs-placement="top" title="excited, pleased, satisfied, encouraged, motivated, happy, hopeful, confident, inspired, proud; (negative) worried, concerned, disappointed, confused, surprised, upset, uncertain">opinion 2</span>]. If possible, I suggest [<span class="hl">kiến nghị 1</span>] because [<span class="hl">nguyên nhân</span>]. In addition, we could [<span class="hl">Kiến nghị 2</span>] to improve [<span class="hl">để cải thiện gì đó</span>].
+
+A short Q&amp;A session and a feedback form would also make the event more useful and interactive. Thank you for considering my ideas. I look forward to your response.
+Sincerely,  
+[<span class="hl">Tên của bạn</span>]
+            </div>
+          </div>
+
+          <!-- Ghi chú: ngân hàng từ Opinion -->
+          <div class="note mt-3">
+            <strong>Gợi ý từ cho Opinion</strong>
+            <div class="row g-3 mt-1">
+              <div class="col-md-6">
+                <div><em>Opinion 1 – đánh giá chất lượng kế hoạch (khách quan):</em></div>
+                <ul class="mb-0">
+                  <li><strong>Tích cực:</strong> excellent, promising, practical, meaningful, useful, valuable, beneficial, inspiring, innovative, creative, effective, important, necessary</li>
+                  <li><strong>Tiêu cực:</strong> unclear, unrealistic, unnecessary, unhelpful, confusing, ineffective, disappointing, problematic, risky</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <div><em>Opinion 2 – cảm xúc cá nhân:</em></div>
+                <ul class="mb-0">
+                  <li><strong>Tích cực:</strong> excited, pleased, satisfied, encouraged, motivated, happy, hopeful, confident, inspired, proud</li>
+                  <li><strong>Tiêu cực:</strong> worried, concerned, disappointed, confused, surprised, upset, uncertain</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Examples -->
+        <section id="vi-du" class="mb-4 filter-section">
+          <h3 class="section-title">Ví dụ: Book Club</h3>
+          <div class="note mb-3">
+            <strong>Đề bài (giữ nguyên tiếng Anh):</strong><br>
+            BOOK CLUB<br>
+            Our club wants to organize an event for the public by inviting a famous author as a speaker. 
+            What kind of author do you suggest? What topic should the speaker speak on? 
+            I am writing to ask all members for their suggestions. Please send me your ideas in an email.<br>
+            The manager<br><br>
+            <em>Write an email to your friend, who is also a member of the group. (50 words)<br>
+            Write an email to the manager of the club. Tell the manager about your opinion. (120–150 words)</em>
+          </div>
+
+          <!-- Example to Friend -->
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h5 class="mb-0">Ví dụ email cho bạn (≈50 từ, tiếng Anh)</h5>
+            <button class="btn btn-outline-primary copy-btn" data-copy-target="#exFriend">Sao chép</button>
+          </div>
+<div class="card template-card mb-4" id="exFriend">
+  <div class="card-body">
+Hi <span class="hl">Minh</span>,  
+I’ve just read the Book Club notice about <span class="hl">inviting a famous author</span>. Honestly, I feel <span class="hl">excited</span> because I expected <span class="hl">an inspiring talk</span>.  
+For now, I plan to <span class="hl">join the event and prepare some questions</span>. What do you think?  
+Best,  
+<span class="hl">An</span>
+  </div>
+</div>
+
+
+          <!-- Example to Manager -->
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h5 class="mb-0">Ví dụ email cho quản lý (120–150 từ, tiếng Anh)</h5>
+            <button class="btn btn-outline-primary copy-btn" data-copy-target="#exManager">Sao chép</button>
+          </div>
+<div class="card template-card" id="exManager">
+  <div class="card-body">
+Dear Manager,<br>
+My name is <span class="hl">An Nguyen</span>, and I am a member of the <span class="hl">Book Club</span>. I’m writing to share my opinion about the announcement regarding <span class="hl">inviting a famous author</span>.<br>
+In my view, the plan is <span class="hl">excellent</span> and it also makes me feel <span class="hl">inspired</span>. If possible, I suggest <span class="hl">inviting a bestselling contemporary novelist</span> because <span class="hl">their works are relatable to both students and the general public</span>. In addition, we could <span class="hl">ask the speaker to focus on “Stories that Mirror Modern Life”</span> to improve <span class="hl">engagement and social awareness</span>.<br>
+I also recommend including a short reading from the author’s latest book, followed by a Q&amp;A session. A feedback form at the end would help us gather opinions for future events. Thank you for considering my ideas. I look forward to your response.<br><br>
+Sincerely,<br>
+<span class="hl">An Nguyen</span>
+  </div>
+</div>
+
+        </section>
+
+        <div class="text-end text-muted small">
+          Các <code>[]</code> trong <strong>Form mẫu</strong> được bôi <span class="text-danger">đỏ</span> và <strong>in đậm</strong> để bạn thay nhanh. Gợi ý từ xuất hiện khi di chuột vào <span class="tip">opinion 1/2</span>.
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <button id="backToTop" class="btn btn-primary back-to-top" aria-label="Lên đầu trang">↑</button>
+
+  <footer class="border-top py-4">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+      <div class="small text-muted">© 2025 APTIS Q4 – Mẫu & Ví dụ. Dùng cho mục đích học tập.</div>
+      <div class="d-flex gap-3 small">
+        <a href="#gioi-thieu">Giới thiệu</a>
+        <a href="#forms">Form mẫu</a>
+        <a href="#vi-du">Ví dụ Book Club</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // In nhanh
+    document.getElementById('btnPrint').addEventListener('click', () => window.print());
+
+    // Lên đầu trang
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      backToTop.style.display = window.scrollY > 400 ? 'block' : 'none';
+    });
+    backToTop.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
+
+    // Lọc nhanh
+    const filterInput = document.getElementById('filterInput');
+    const sections = Array.from(document.querySelectorAll('.filter-section'));
+    filterInput.addEventListener('input', () => {
+      const q = filterInput.value.trim().toLowerCase();
+      sections.forEach(sec => {
+        const hit = sec.textContent.toLowerCase().includes(q);
+        sec.style.display = hit ? '' : 'none';
+      });
+    });
+
+    // Nút Sao chép
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetSel = btn.getAttribute('data-copy-target');
+        const el = document.querySelector(targetSel);
+        if(!el) return;
+        const text = el.innerText.trim();
+        navigator.clipboard.writeText(text).then(() => {
+          btn.textContent = 'Đã sao chép';
+          setTimeout(() => btn.textContent = 'Sao chép', 1500);
+        }).catch(() => {
+          const range = document.createRange();
+          range.selectNodeContents(el);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+          try { document.execCommand('copy'); } catch(e) {}
+          sel.removeAllRanges();
+          btn.textContent = 'Đã sao chép';
+          setTimeout(() => btn.textContent = 'Sao chép', 1500);
+        });
+      });
+    });
+
+    // Kích hoạt tooltip Bootstrap
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle=\"tooltip\"]'));
+    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+      new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+  </script>
+</body>
+</html>

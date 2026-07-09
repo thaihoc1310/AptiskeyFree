@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Mẹo Listening – Câu 15</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .rule-box {
+      background: #ffffff;
+      border-left: 5px solid #0d6efd;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .table th {
+      background-color: #0d6efd;
+      color: white;
+      text-align: center;
+    }
+    .table td {
+      vertical-align: middle;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container my-5">
+
+  <h1 class="text-center text-primary mb-4">
+    Mẹo nhớ Listening – Câu 15
+  </h1>
+
+  <!-- Quy tắc nhớ -->
+<div class="rule-box mb-4">
+  <h5 class="fw-bold">Quy tắc nhớ:</h5>
+  <ul>
+    <li><strong>M (1)</strong> – Man là con số 1</li>
+    <li><strong>W (2)</strong> – Woman là con số 2</li>
+    <li><strong>B (0)</strong> – Both (cả hai) là con số 0</li>
+  </ul>
+
+  <p class="mb-1">
+    <strong>Ví dụ:</strong> Music and Singer → <strong>2010</strong> (nữ đọc trước),
+    nam đọc trước thì đảo <strong>1 ↔ 2</strong> → <strong>1020</strong>
+  </p>
+  <p class="mb-3">
+    👉 Mẹo nhớ: <strong>Ca sĩ sinh năm 2010</strong>
+  </p>
+
+  <!-- Nút Play / Pause + thời gian -->
+  <div class="d-flex align-items-center gap-3">
+    <button id="btnPlayPause" class="btn btn-success">
+      ▶ Play
+    </button>
+
+    <span class="fw-bold text-primary">
+      ⏱ Đã nghe: <span id="timeCounter">0</span> giây
+    </span>
+  </div>
+
+  <!-- Audio -->
+  <audio id="audioMeo15" src="./audio/question15/Listening_meocau15.mp3"></audio>
+
+  <!-- Lưu ý -->
+<p class="text-danger mt-3 mb-0">
+  ⚠ <strong>Lưu ý 1:</strong> Ví dụ bạn nghe audio đề này thì từ giây thứ 12 trở về trước chỉ là giới thiệu,
+  giây thứ 13 mới bắt đầu biết người nói trước là nữ hay nam, đừng để bị đánh lừa nhé!!
+  (Như đề này thì người đàn ông nói trước)
+</p>
+<p class="text-danger mt-3 mb-0">
+  ⚠ <strong>Lưu ý 2:</strong> Dưới đây là đáp án cho nữ đọc trước, nếu nam đọc trước bạn đảo 1 cho 2 và 2 cho 1 là được, 0 giữ nguyên.
+</p>
+
+</div>
+
+<script>
+  const audio = document.getElementById("audioMeo15");
+  const btn = document.getElementById("btnPlayPause");
+  const timeCounter = document.getElementById("timeCounter");
+
+  let timer = null;
+
+  btn.addEventListener("click", () => {
+    if (audio.paused) {
+      audio.play();
+      btn.innerHTML = "⏸ Pause";
+      btn.classList.remove("btn-success");
+      btn.classList.add("btn-warning");
+
+      timer = setInterval(() => {
+        timeCounter.textContent = Math.floor(audio.currentTime);
+      }, 500);
+    } else {
+      audio.pause();
+      btn.innerHTML = "▶ Play";
+      btn.classList.remove("btn-warning");
+      btn.classList.add("btn-success");
+
+      clearInterval(timer);
+    }
+  });
+
+  // Khi audio chạy hết → reset về đầu
+  audio.addEventListener("ended", () => {
+    btn.innerHTML = "▶ Play";
+    btn.classList.remove("btn-warning");
+    btn.classList.add("btn-success");
+    clearInterval(timer);
+    timeCounter.textContent = 0;
+  });
+</script>
+
+
+  <!-- Bảng dữ liệu -->
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>Chủ đề</th>
+          <th>Đáp án<br>(Nữ đọc trước)</th>
+          <th>Mẹo dễ nhớ</th>
+        </tr>
+      </thead>
+      <tbody id="meoTableBody">
+        <!-- JS render -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="meoModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="meoModalTitle"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <img id="meoModalImage" class="img-fluid rounded" alt="Mẹo ghi nhớ">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+<script src="./js/listening_question/listening_meo_cau15_method2.js"></script>
+
+</body>
+</html>
