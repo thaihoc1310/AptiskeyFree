@@ -1,3 +1,5 @@
+import { mapLegacyPath } from './pages/legacy-page.js';
+
 // Simple hash-based router
 const routes = {};
 let currentRoute = null;
@@ -53,9 +55,24 @@ export function startRouter() {
     const anchor = event.target.closest?.('a[href]');
     if (!anchor) return;
     const href = anchor.getAttribute('href');
-    if (!href?.startsWith('#/')) return;
-    event.preventDefault();
-    window.location.hash = href;
+    if (!href || href.startsWith('http') || href.startsWith('mailto:')) return;
+
+    if (href.startsWith('#/') || href.startsWith('/#/')) {
+      event.preventDefault();
+      window.location.hash = href.replace(/^\/?#/, '');
+      return;
+    }
+    if (href.startsWith('#')) return;
+
+    const mapped = mapLegacyPath(href);
+    if (mapped !== href) {
+      event.preventDefault();
+      if (mapped.startsWith('/#') || mapped.startsWith('#')) {
+        window.location.hash = mapped.replace(/^\/?#/, '');
+      } else {
+        window.location.href = mapped;
+      }
+    }
   });
   window.addEventListener('hashchange', handleRoute);
   handleRoute();

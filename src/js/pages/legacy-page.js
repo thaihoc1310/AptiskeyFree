@@ -379,9 +379,13 @@ function rewriteCss(css) {
   return css.replace(/url\((['"]?)\/?images\//g, `url($1${CRAWLED_BASE}/images/`);
 }
 
-function mapLegacyPath(path) {
+export function mapLegacyPath(path) {
+  if (path.startsWith('#/') || path.startsWith('/#/')) {
+    return path;
+  }
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   for (const [regex, target] of routeMap) {
-    const match = path.match(regex);
+    const match = normalizedPath.match(regex);
     if (match) {
       const resolved = typeof target === 'function' ? target(...match) : target;
       return resolved.startsWith('#/') ? `/${resolved}` : resolved;
@@ -400,9 +404,9 @@ function interceptLegacyNavigation() {
     if (!anchor) return;
     const href = anchor.getAttribute('href');
     if (!href || href.startsWith('http') || href.startsWith('mailto:')) return;
-    if (href.startsWith('#/')) {
+    if (href.startsWith('#/') || href.startsWith('/#/')) {
       event.preventDefault();
-      window.location.hash = href;
+      window.location.hash = href.replace(/^\/?#/, '');
       return;
     }
     if (href.startsWith('#')) return;
