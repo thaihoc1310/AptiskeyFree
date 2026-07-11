@@ -138,7 +138,7 @@ const questions1_15 = [
 ];
 
 const questions1_16 = [
-  { questionStart: "The house is very ", answerOptions: ["new", "loud", "old"], questionEnd: ".", correctAnswer: "old" },
+  { questionStart: "The house is very ", answerOptions: ["hate", "mean", "old"], questionEnd: ".", correctAnswer: "old" },
   { questionStart: "We ", answerOptions: ["visited", "broke", "sold"], questionEnd: " our relatives last weekend.", correctAnswer: "visited" },
   { questionStart: "I ", answerOptions: ["wrote", "drank", "sang"], questionEnd: " a cup of tea with my grandmother.", correctAnswer: "drank" },
   { questionStart: "They plan to ", answerOptions: ["break", "sell", "visit"], questionEnd: " us next month.", correctAnswer: "visit" },
@@ -156,7 +156,7 @@ const questions1_17 = [
 
 
 const questions1_18 = [
-  { questionStart: "The task was very ", answerOptions: ["easy", "hard", "loud"], questionEnd: ".", correctAnswer: "hard" },
+  { questionStart: "The task was very ", answerOptions: ["got", "hard", "make"], questionEnd: ".", correctAnswer: "hard" },
   { questionStart: "We ", answerOptions: ["broke", "sold", "followed"], questionEnd: " the instructions carefully.", correctAnswer: "followed" },
   { questionStart: "I already ", answerOptions: ["checked", "broke", "sold"], questionEnd: " the numbers twice.", correctAnswer: "checked" },
   { questionStart: "Please ", answerOptions: ["break", "submit", "sell"], questionEnd: " your report by Monday.", correctAnswer: "submit" },
@@ -180,15 +180,15 @@ const questions1_20 = [
 ];
 
 const questions1_21 = [
-  { questionStart: "It was a ", answerOptions: ["sunny", "rainy", "loud"], questionEnd: " day at the beach.", correctAnswer: "sunny" },
-  { questionStart: "We had a big ", answerOptions: ["dinner", "breakfast", "lunch"], questionEnd: " at the hotel.", correctAnswer: "breakfast" },
+  { questionStart: "It was a ", answerOptions: ["sunny", "main", "break"], questionEnd: " day at the beach.", correctAnswer: "sunny" },
+  { questionStart: "We had a big ", answerOptions: ["fresh", "breakfast", "funny"], questionEnd: " at the hotel.", correctAnswer: "breakfast" },
   { questionStart: "We ", answerOptions: ["broke", "sold", "rented"], questionEnd: " a car for the trip.", correctAnswer: "rented" },
   { questionStart: "We plan to ", answerOptions: ["visit", "break", "sell"], questionEnd: " the old town tomorrow.", correctAnswer: "visit" },
   { questionStart: "We bought some ", answerOptions: ["rocks", "gifts", "papers"], questionEnd: " for our family.", correctAnswer: "gifts" }
 ];
 
 const questions1_22 = [
-  { questionStart: "The cookies smell very ", answerOptions: ["bad", "loud", "nice"], questionEnd: ".", correctAnswer: "nice" },
+  { questionStart: "The cookies smell very ", answerOptions: ["again", "funny", "nice"], questionEnd: ".", correctAnswer: "nice" },
   { questionStart: "My mother ", answerOptions: ["made", "broke", "sold"], questionEnd: " a chocolate cake.", correctAnswer: "made" },
   { questionStart: "I ", answerOptions: ["drank", "mixed", "sang"], questionEnd: " the ingredients together.", correctAnswer: "mixed" },
   { questionStart: "Could you ", answerOptions: ["break", "sell", "bring"], questionEnd: " some milk from the shop?", correctAnswer: "bring" },
@@ -196,7 +196,7 @@ const questions1_22 = [
 ];
 
 const questions1_23 = [
-  { questionStart: "The city center was very ", answerOptions: ["quiet", "busy", "loud"], questionEnd: " today.", correctAnswer: "busy" },
+  { questionStart: "The city center was very ", answerOptions: ["low", "busy", "fly"], questionEnd: " today.", correctAnswer: "busy" },
   { questionStart: "We visited the ", answerOptions: ["forest", "river", "museum"], questionEnd: " in the afternoon.", correctAnswer: "museum" },
   { questionStart: "We ", answerOptions: ["ate", "wrote", "sang"], questionEnd: " lunch near the square.", correctAnswer: "ate" },
   { questionStart: "Don't forget to ", answerOptions: ["break", "take", "sell"], questionEnd: " some photos.", correctAnswer: "take" },
@@ -204,11 +204,11 @@ const questions1_23 = [
 ];
 
 const questions1_24 = [
-  { questionStart: "The music was very ", answerOptions: ["quiet", "soft", "loud"], questionEnd: ".", correctAnswer: "loud" },
+  { questionStart: "The music was very ", answerOptions: ["beach", "sky", "loud"], questionEnd: ".", correctAnswer: "loud" },
   { questionStart: "We ", answerOptions: ["took", "drank", "sang"], questionEnd: " a taxi to the concert.", correctAnswer: "took" },
   { questionStart: "We ", answerOptions: ["broke", "watched", "sold"], questionEnd: " the whole show.", correctAnswer: "watched" },
   { questionStart: "I want to ", answerOptions: ["break", "sell", "buy"], questionEnd: " a T-shirt as a souvenir.", correctAnswer: "buy" },
-  { questionStart: "The concert was really ", answerOptions: ["fun", "boring", "loud"], questionEnd: ".", correctAnswer: "fun" }
+  { questionStart: "The concert was really ", answerOptions: ["fun", "warning", "land"], questionEnd: ".", correctAnswer: "fun" }
 ];
 
 const questions1_25 = [
@@ -220,7 +220,7 @@ const questions1_25 = [
 ];
 
 const questions1_26 = [
-  { questionStart: "The old room was very ", answerOptions: ["sweet", "loud", "dusty"], questionEnd: ".", correctAnswer: "dusty" },
+  { questionStart: "The old room was very ", answerOptions: ["bring", "again", "dusty"], questionEnd: ".", correctAnswer: "dusty" },
   { questionStart: "I ", answerOptions: ["found", "drank", "sang"], questionEnd: " my keys under the sofa.", correctAnswer: "found" },
   { questionStart: "My father ", answerOptions: ["painted", "fixed", "sold"], questionEnd: " the broken chair.", correctAnswer: "fixed" },
   { questionStart: "We plan to ", answerOptions: ["forget", "break", "organize"], questionEnd: " the garage this weekend.", correctAnswer: "organize" },
@@ -252,7 +252,7 @@ const questions1_29 = [
 ];
 
 const questions1_30 = [
-  { questionStart: "My new bike is very ", answerOptions: ["light", "heavy", "loud"], questionEnd: ".", correctAnswer: "light" },
+  { questionStart: "My new bike is very ", answerOptions: ["light", "hate", "gain"], questionEnd: ".", correctAnswer: "light" },
   { questionStart: "My uncle ", answerOptions: ["broke", "fixed", "sold"], questionEnd: " the flat tire.", correctAnswer: "fixed" },
   { questionStart: "I ", answerOptions: ["drank", "sang", "rode"], questionEnd: " my bike to school today.", correctAnswer: "rode" },
   { questionStart: "Remember to ", answerOptions: ["take", "break", "sell"], questionEnd: " your helmet with you.", correctAnswer: "take" },
@@ -260,7 +260,7 @@ const questions1_30 = [
 ];
 
 const questions1_31 = [
-  { questionStart: "The dessert tasted very ", answerOptions: ["sour", "sweet", "loud"], questionEnd: ".", correctAnswer: "sweet" },
+  { questionStart: "The cookies very ", answerOptions: ["thank", "sweet", "mean"], questionEnd: ".", correctAnswer: "sweet" },
   { questionStart: "She ", answerOptions: ["broke", "sold", "made"], questionEnd: " some fresh juice.", correctAnswer: "made" },
   { questionStart: "We ", answerOptions: ["washed", "broke", "sold"], questionEnd: " the fruit before eating.", correctAnswer: "washed" },
   { questionStart: "I need to ", answerOptions: ["break", "buy", "sell"], questionEnd: " more sugar from the shop.", correctAnswer: "buy" },
@@ -276,7 +276,7 @@ const questions1_32 = [
 ];
 
 const questions1_33 = [
-  { questionStart: "The cake tastes very ", answerOptions: ["bad", "good", "loud"], questionEnd: ".", correctAnswer: "good" },
+  { questionStart: "The cake tastes very ", answerOptions: ["fly", "good", "beach"], questionEnd: ".", correctAnswer: "good" },
   { questionStart: "My sister ", answerOptions: ["broke", "sold", "helped"], questionEnd: " me cook dinner.", correctAnswer: "helped" },
   { questionStart: "I ", answerOptions: ["mixed", "drank", "sang"], questionEnd: " the flour and sugar together.", correctAnswer: "mixed" },
   { questionStart: "Let's ", answerOptions: ["break", "make", "sell"], questionEnd: " a cake for the party.", correctAnswer: "make" },
@@ -323,6 +323,30 @@ const questions1_38 = [
   { questionStart: "It was very ", answerOptions: ["loud", "heavy", "nice"], questionEnd: " to see you again.", correctAnswer: "nice" }
 ];
 
+const questions1_39 = [
+  { questionStart: "The food was very ", answerOptions: ["careful", "beautiful", "delicious"], questionEnd: ".", correctAnswer: "delicious" },
+  { questionStart: "We ", answerOptions: ["visited", "looked", "travelled"], questionEnd: " a famous temple yesterday.", correctAnswer: "visited" },
+  { questionStart: "She ", answerOptions: ["made", "did", "took"], questionEnd: " many photos on the trip.", correctAnswer: "took" },
+  { questionStart: "Don't forget to ", answerOptions: ["bring", "catch", "leave"], questionEnd: " your umbrella.", correctAnswer: "bring" },
+  { questionStart: "We will visit the museum ", answerOptions: ["tomorrow", "next", "future"], questionEnd: " week.", correctAnswer: "next" }
+];
+
+const questions1_40 = [
+  { questionStart: "The hotel room was very ", answerOptions: ["comfortable", "friendly", "polite"], questionEnd: ".", correctAnswer: "comfortable" },
+  { questionStart: "My father ", answerOptions: ["learned", "studied", "taught"], questionEnd: " me how to fish.", correctAnswer: "taught" },
+  { questionStart: "We sat on the beach and ", answerOptions: ["looked", "watched", "saw"], questionEnd: " the sunset.", correctAnswer: "watched" },
+  { questionStart: "In the morning, we usually ", answerOptions: ["take", "do", "have"], questionEnd: " breakfast together.", correctAnswer: "have" },
+  { questionStart: "We picked some fresh ", answerOptions: ["vegetables", "meat", "fruit"], questionEnd: " from the trees.", correctAnswer: "fruit" }
+];
+
+const questions1_41 = [
+  { questionStart: "The math exam was very ", answerOptions: ["heavy", "expensive", "difficult"], questionEnd: ".", correctAnswer: "difficult" },
+  { questionStart: "I ", answerOptions: ["read", "spoke", "listened"], questionEnd: " three chapters of that book last night.", correctAnswer: "read" },
+  { questionStart: "She has already ", answerOptions: ["finished", "made", "worked"], questionEnd: " all her homework.", correctAnswer: "finished" },
+  { questionStart: "You need to ", answerOptions: ["send", "put", "find"], questionEnd: " this form by Friday.", correctAnswer: "send" },
+  { questionStart: "Thank you for your ", answerOptions: ["idea", "work", "help"], questionEnd: " with my project.", correctAnswer: "help" }
+];
+
 
 const questionsArrays = [
     questions1_1,
@@ -362,7 +386,10 @@ const questionsArrays = [
     questions1_35,
     questions1_36,
     questions1_37,
-    questions1_38
+    questions1_38,
+    questions1_39,
+    questions1_40,
+    questions1_41
 ];
 
 

@@ -1,6 +1,7 @@
 ﻿// Lịch sử cập nhật đề
 document.addEventListener("DOMContentLoaded", function () {
   const updates = [
+    { date: "10/7/2026", text:  "Listening question 16-17: thêm đề mới câu 59. <a href='listening_question16_17.html' target='_blank'>Xem tại đây</a>" },
     { date: "9/7/2026", text:  "Reading part1 (học theo câu hỏi): thêm bộ đề 36-38. <a href='reading_question1.html' target='_blank'>Xem tại đây</a>" },
     { date: "8/7/2026", text:  "Reading part1 (học theo câu hỏi): thêm bộ đề 33-35. <a href='reading_question1.html' target='_blank'>Xem tại đây</a>" },
     { date: "7/7/2026", text:  "Reading part1 (học theo câu hỏi): thêm bộ đề 26-32. <a href='reading_question1.html' target='_blank'>Xem tại đây</a>" },
@@ -47,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Đổ dữ liệu + thêm class màu xanh nếu là 21/1/2026
   listEl.innerHTML = updates
     .map(item => {
-      const isGreen = item.date === "9/7/2026";
+      const isGreen = item.date === "10/7/2026";
       return `
         <li style="${isGreen ? 'color: green; font-weight: bold;' : ''}">
           <strong>${item.date}</strong> – ${item.text}

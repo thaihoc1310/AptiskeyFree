@@ -270,7 +270,7 @@ function renderQuestions4() {
 
 
 // Cập nhật prompt cho toàn bộ
-const promptText_question1 = "Người này đang là thành viên của câu lạc bộ " + club_name + " Hãy chấm điểm 5 câu sau theo khung aptis mức độ A0 đến C1, tiêu chí chấm điểm là trả lời dưới 5 từ, đơn giản và viết hoa chữ đầu dấu chấm cuối câu, kết quả trả về có giải thích.\n\n";
+const promptText_question1 = "Người trả lời là thành viên của câu lạc bộ " + club_name + ". Hãy chấm điểm 5 câu trả lời dưới đây theo thang năng lực Aptis từ A0 đến C1. Tiêu chí chấm điểm: Mỗi câu trả lời không quá 5 từ; nội dung đơn giản nhưng phải phù hợp với câu hỏi; chữ cái đầu câu phải viết hoa và cuối câu phải có dấu chấm; chấm điểm theo hướng dễ và ưu tiên khả năng truyền đạt ý; không bắt buộc câu trả lời phải là một câu hoàn chỉnh; chỉ cần câu trả lời có nội dung phù hợp và không quá 5 từ thì có thể đạt điểm cao. Hãy trả về mức điểm A0–C1 cho từng câu và giải thích ngắn gọn lý do chấm điểm.\n\n";
 const promptText_question2 = "Người này đang là thành viên của câu lạc bộ " + club_name + " Hãy chấm điểm câu trả lời sau theo khung aptis mức độ A0 đến C1, độ dài trong phạm vi 20-30 words, kết quả trả về có giải thích:\n\n";
 const promptText_question3 = "Người này đang là thành viên của câu lạc bộ " + club_name + " Hãy chấm điểm câu trả lời sau theo khung aptis mức độ A0 đến C1, độ dài trong phạm vi 30-40 từ, kết quả trả về có giải thích:\n\n";
 const promptText_question4 = "Người này đang là thành viên của câu lạc bộ " + club_name + " Hãy chấm điểm câu trả lời sau theo khung aptis mức độ A0 đến C1, độ dài trong phạm vi 50 từ cho câu hỏi 1 và 120-150 từ cho câu hỏi 2, kết quả trả về có giải thích, sau khi chấm 4 câu hãy chấm cấp độ tổng thể cho các câu trên:\n\n";
@@ -367,7 +367,7 @@ async function handleSubmitAllQuestions() {
 
         // Hiển thị kết quả trong modal kết quả
         const modalBody = document.getElementById('modal-body-ai');
-        modalBody.innerHTML = `<pre>${data.answer}</pre>`; 
+        modalBody.innerHTML = renderAIGradingResult(data.answer); 
         console.log(data.answer);
         const resultModal = new bootstrap.Modal(document.getElementById('resultModal'));
         resultModal.show();

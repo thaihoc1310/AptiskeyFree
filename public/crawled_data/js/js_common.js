@@ -37,10 +37,10 @@ async function initializeUser() {
         // 4. CẬP NHẬT GIAO DIỆN NẾU THÀNH CÔNG
         if (data.success) {
             updateUIForUser(data, nameEl, statusEl, authBtn, tabProfile, xProfile);
-
+            
             // Nếu trang hiện tại có các nút admin, hãy kiểm tra quyền admin luôn
             if (typeof checkAdminUI === 'function') {
-                checkAdminUI();
+                checkAdminUI(); 
             }
         } else {
             updateUIForGuest(nameEl, statusEl, authBtn, tabProfile, xProfile);
@@ -58,7 +58,7 @@ function updateUIForGuest(nameEl, statusEl, authBtn, tabProfile, xProfile) {
     if (nameEl) nameEl.textContent = "Khách";
     if (tabProfile) tabProfile.classList.add("d-none");
     if (xProfile) xProfile.style.display = "none";
-
+    
     if (statusEl) {
         statusEl.innerHTML = `
             Khách trải nghiệm
@@ -88,7 +88,7 @@ function updateUIForUser(data, nameEl, statusEl, authBtn, tabProfile, xProfile) 
     if (statusEl) {
         const expireDateObj = new Date(data.expiredAt);
         const now = new Date();
-
+        
         // Format ngày theo kiểu Việt Nam: dd/mm/yyyy hh:mm
         const formattedDate = expireDateObj.toLocaleString('vi-VN', {
             year: 'numeric', month: '2-digit', day: '2-digit',
