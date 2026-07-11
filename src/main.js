@@ -11,6 +11,7 @@ import { renderReadingQuestion, renderReadingBode } from './js/pages/reading.js'
 import { renderListeningQuestion, renderListeningBode } from './js/pages/listening.js';
 import { renderSpeakingQuestion, renderWritingBode, renderGrammarBode } from './js/pages/other-nav.js';
 import { initExamReview, renderExamReview } from './js/pages/exam-review.js';
+import { initScoreLogic, renderScoreLogic } from './js/pages/score-logic.js';
 import { detailConfig, initLegacyPage, initTimeSetup, renderLegacyPage, renderTimeSetup, staticConfig, teardownLegacyPage, timerStorageKey } from './js/pages/legacy-page.js';
 
 // Apply saved theme
@@ -54,6 +55,10 @@ route('/grammar/bode', () => mountPage(renderGrammarBode()));
 route('/exam-review', () => {
   mountPage(renderExamReview());
   initExamReview();
+});
+route('/score-logic', () => {
+  mountPage(renderScoreLogic());
+  initScoreLogic();
 });
 
 async function mountLegacy(config) {

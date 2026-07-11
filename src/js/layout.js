@@ -40,7 +40,8 @@ const NAV_ITEMS = [
       { icon: 'bi-lightbulb', label: 'Mẹo ngữ pháp', path: '/grammar/meo' },
     ]
   },
-  { section: 'CỘNG ĐỒNG' },
+  { section: 'KHÁC' },
+  { icon: 'bi-calculator', label: 'Tính điểm Overall', path: '/score-logic', color: 'var(--accent-grammar)' },
   { icon: 'bi-chat-square-quote', label: 'Review đề thi', path: '/exam-review', color: 'var(--primary-light)' },
 ];
 

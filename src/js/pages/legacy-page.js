@@ -11,6 +11,7 @@ const routeMap = [
   [/^\/writing_meo(?:\.html)?$/, '#/writing/meo'],
   [/^\/grammar_bode(?:\.html)?$/, '#/grammar/bode'],
   [/^\/exam-review(?:\.html)?$/, '#/exam-review'],
+  [/^\/logic-diem_aptis(?:\.html)?$/, '#/score-logic'],
   [/^\/reading(\d{3})(?:\.html)?$/, (_m, id) => `#/reading/key/${id}`],
   [/^\/listeningkey(\d{3})(?:\.html)?$/, (_m, id) => `#/listening/key/${id}`],
   [/^\/writingkey(\d{3})(?:\.html)?$/, (_m, id) => `#/writing/key/${id}`],

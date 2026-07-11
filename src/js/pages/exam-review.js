@@ -31,6 +31,48 @@ function dateKey(value) {
   return `${year}-${month}-${day}`;
 }
 
+function formatArchiveDate(key) {
+  const [year, month, day] = key.split('-');
+  return `${Number(day)}/${Number(month)}/${year}`;
+}
+
+function reviewDates() {
+  const counts = new Map();
+  allReviews.forEach((review) => {
+    const key = dateKey(review.createdAt);
+    if (key) counts.set(key, (counts.get(key) || 0) + 1);
+  });
+  return [...counts.entries()].sort(([a], [b]) => b.localeCompare(a));
+}
+
+function renderDateArchive() {
+  const archive = document.getElementById('reviewDateArchive');
+  const selectedDate = document.getElementById('reviewDateFilter')?.value || '';
+  if (!archive) return;
+
+  const grouped = new Map();
+  reviewDates().forEach(([key, count]) => {
+    const year = key.slice(0, 4);
+    if (!grouped.has(year)) grouped.set(year, []);
+    grouped.get(year).push([key, count]);
+  });
+
+  archive.innerHTML = `
+    <button class="review-date-item${selectedDate ? '' : ' is-active'}" type="button" data-review-date="">
+      <span>Tất cả review</span><strong>${allReviews.length}</strong>
+    </button>
+    ${[...grouped.entries()].map(([year, dates], index) => `
+      <details class="review-year"${index === 0 || dates.some(([key]) => key === selectedDate) ? ' open' : ''}>
+        <summary><span>${year}</span><i class="bi bi-chevron-down"></i></summary>
+        <div class="review-year-dates">
+          ${dates.map(([key, count]) => `
+            <button class="review-date-item${key === selectedDate ? ' is-active' : ''}" type="button" data-review-date="${key}">
+              <span>${formatArchiveDate(key)}</span><strong>${count}</strong>
+            </button>`).join('')}
+        </div>
+      </details>`).join('')}`;
+}
+
 function reviewCard(review) {
   const preview = review.content.split(/\r?\n/).find(Boolean) || review.content;
   return `
@@ -80,6 +122,7 @@ function renderList() {
   }
 
   if (loadMore) loadMore.hidden = visible.length >= filtered.length;
+  renderDateArchive();
 }
 
 function renderError(message) {
@@ -111,26 +154,42 @@ export function renderExamReview() {
         </a>
       </div>
 
-      <div class="exam-review-toolbar animate-fade-in">
-        <div class="exam-review-toolbar-copy">
-          <span class="exam-review-live"><i></i>Cập nhật hằng ngày</span>
-          <strong id="examReviewCount">Đang tải…</strong>
-          <small id="examReviewUpdated"></small>
-        </div>
-        <div class="exam-review-filter">
-          <label for="reviewDateFilter"><i class="bi bi-calendar3"></i>Ngày review</label>
-          <input id="reviewDateFilter" type="date">
-          <button id="clearReviewFilter" type="button" class="btn btn-secondary" hidden>Xóa lọc</button>
-        </div>
-      </div>
+      <div class="exam-review-layout">
+        <aside class="exam-review-dates animate-fade-in">
+          <div class="exam-review-dates-heading">
+            <span><i class="bi bi-calendar2-week"></i>Ngày có review</span>
+            <small>Chọn ngày để xem nhanh</small>
+          </div>
+          <div id="reviewDateArchive" class="review-date-archive">
+            <div class="review-date-placeholder"></div>
+            <div class="review-date-placeholder"></div>
+            <div class="review-date-placeholder"></div>
+          </div>
+        </aside>
 
-      <div id="examReviewList" class="exam-review-list" aria-live="polite">
-        <div class="exam-review-loading"><span></span><span></span><span></span></div>
-      </div>
-      <div class="exam-review-more">
-        <button id="reviewLoadMore" class="btn btn-secondary" type="button" hidden>
-          Xem thêm review <i class="bi bi-arrow-down"></i>
-        </button>
+        <div class="exam-review-main">
+          <div class="exam-review-toolbar animate-fade-in">
+            <div class="exam-review-toolbar-copy">
+              <span class="exam-review-live"><i></i>Cập nhật hằng ngày</span>
+              <strong id="examReviewCount">Đang tải…</strong>
+              <small id="examReviewUpdated"></small>
+            </div>
+            <div class="exam-review-filter">
+              <label for="reviewDateFilter"><i class="bi bi-calendar3"></i>Ngày review</label>
+              <input id="reviewDateFilter" type="date">
+              <button id="clearReviewFilter" type="button" class="btn btn-secondary" hidden>Xóa lọc</button>
+            </div>
+          </div>
+
+          <div id="examReviewList" class="exam-review-list" aria-live="polite">
+            <div class="exam-review-loading"><span></span><span></span><span></span></div>
+          </div>
+          <div class="exam-review-more">
+            <button id="reviewLoadMore" class="btn btn-secondary" type="button" hidden>
+              Xem thêm review <i class="bi bi-arrow-down"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </section>`;
 }
@@ -140,6 +199,7 @@ export async function initExamReview() {
   const clearFilter = document.getElementById('clearReviewFilter');
   const loadMore = document.getElementById('reviewLoadMore');
   const list = document.getElementById('examReviewList');
+  const archive = document.getElementById('reviewDateArchive');
 
   dateFilter?.addEventListener('change', () => {
     visibleCount = PAGE_SIZE;
@@ -163,6 +223,15 @@ export async function initExamReview() {
     const expanded = summary.getAttribute('aria-expanded') === 'true';
     summary.setAttribute('aria-expanded', String(!expanded));
     if (detail) detail.hidden = expanded;
+  });
+  archive?.addEventListener('click', (event) => {
+    const button = event.target.closest('[data-review-date]');
+    if (!button || !dateFilter) return;
+    dateFilter.value = button.dataset.reviewDate || '';
+    if (clearFilter) clearFilter.hidden = !dateFilter.value;
+    visibleCount = PAGE_SIZE;
+    renderList();
+    document.querySelector('.exam-review-toolbar')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 
   try {

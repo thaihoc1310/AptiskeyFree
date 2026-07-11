@@ -1,4 +1,4 @@
-import { mkdir, rename, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -72,8 +72,7 @@ try {
     .filter(isApproved)
     .map(cleanPost)
     .filter((post) => post.id && post.content && post.createdAt)
-    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt))
-    .slice(0, 200);
+    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
 
   const snapshot = {
     source: `${baseUrl}/exam-review.html`,
@@ -82,10 +81,22 @@ try {
     posts,
   };
 
-  await mkdir(dirname(outputPath), { recursive: true });
-  await writeFile(tempPath, `${JSON.stringify(snapshot, null, 2)}\n`, 'utf8');
-  await rename(tempPath, outputPath);
-  console.log(`  Exam reviews: saved ${posts.length} approved posts`);
+  let existingPosts = null;
+  try {
+    const existing = JSON.parse(await readFile(outputPath, 'utf8'));
+    existingPosts = Array.isArray(existing?.posts) ? existing.posts : null;
+  } catch {
+    // The first successful run creates the snapshot.
+  }
+
+  if (existingPosts && JSON.stringify(existingPosts) === JSON.stringify(posts)) {
+    console.log(`  Exam reviews: unchanged (${posts.length} approved posts)`);
+  } else {
+    await mkdir(dirname(outputPath), { recursive: true });
+    await writeFile(tempPath, `${JSON.stringify(snapshot, null, 2)}\n`, 'utf8');
+    await rename(tempPath, outputPath);
+    console.log(`  Exam reviews: saved ${posts.length} approved posts`);
+  }
 } catch (error) {
   console.error(`  WARNING: failed to update exam reviews: ${error.message}`);
   process.exitCode = 0;
