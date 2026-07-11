@@ -22,6 +22,9 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y curl
 
       - name: 🚀 Chạy script cập nhật đề
+        env:
+          APTISKEY_EMAIL: ${{ secrets.APTISKEY_EMAIL }}
+          APTISKEY_PASSWORD: ${{ secrets.APTISKEY_PASSWORD }}
         run: |
           chmod +x ./update-content.sh
           ./update-content.sh

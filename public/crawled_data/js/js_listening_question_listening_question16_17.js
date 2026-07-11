@@ -1608,7 +1608,34 @@ Overall, the critic had a very positive opinion of the book. They mentioned that
 
 Personally, I believe podcasting is an excellent way to build a community. Podcasts allow people with similar interests to connect, share ideas, and feel part of something larger. That's why podcasting has become so popular in recent years.`
   },
-  
+  {
+    audioUrl: "audio/question16/2026_T5/05_aptiskey_com_james_panos_exhibition.mp3",
+    topic: "James Panos Greek Art Exhibition",
+    questions: [
+      {
+        id: "16.1",
+        question: "How did many art critics describe Jame Panos' paintings?",
+        options: [
+          "They would be characterized by sadness",
+          "They would be admired for their bright colors",
+          "They would be criticized for being too abstract"
+        ]
+      },
+      {
+        id: "16.2",
+        question: "What did the exhibition seem like to visitors?",
+        options: [
+          "A window into the past",
+          "A confusing maze of rooms",
+          "A modern showcase of technology"
+        ]
+      }
+    ],
+    transcript: `When art critics reviewed the recent collection by Greek artist James Panos, many focused on the emotional tone running through his work. Some might expect critics to praise the paintings for their vibrant, cheerful colors, but that was rarely the case here. Others assumed the pieces would be dismissed as overly abstract and difficult to interpret. In reality, most critics agreed that the paintings carried a deep sense of melancholy, with muted tones and solitary figures that left viewers with a lingering feeling of sadness.
+
+As for the exhibition itself, visitors described their experience in very personal terms. It wasn't seen as a confusing maze of rooms that left people lost, nor did it come across as a modern showcase built around flashy technology and interactive displays. Instead, many visitors said walking through the gallery felt like stepping through a window into the past, as though each canvas offered a quiet glimpse of an earlier time in Greek history and culture.`
+  },
+
 
 
 

@@ -10,6 +10,7 @@ import { renderHome } from './js/pages/home.js';
 import { renderReadingQuestion, renderReadingBode } from './js/pages/reading.js';
 import { renderListeningQuestion, renderListeningBode } from './js/pages/listening.js';
 import { renderSpeakingQuestion, renderWritingBode, renderGrammarBode } from './js/pages/other-nav.js';
+import { initExamReview, renderExamReview } from './js/pages/exam-review.js';
 import { detailConfig, initLegacyPage, initTimeSetup, renderLegacyPage, renderTimeSetup, staticConfig, teardownLegacyPage, timerStorageKey } from './js/pages/legacy-page.js';
 
 // Apply saved theme
@@ -50,6 +51,10 @@ route('/listening/bode', () => mountPage(renderListeningBode()));
 route('/speaking/question', () => mountPage(renderSpeakingQuestion()));
 route('/writing/bode', () => mountPage(renderWritingBode()));
 route('/grammar/bode', () => mountPage(renderGrammarBode()));
+route('/exam-review', () => {
+  mountPage(renderExamReview());
+  initExamReview();
+});
 
 async function mountLegacy(config) {
   document.body.classList.toggle('focus-mode', Boolean(config.focusMode));

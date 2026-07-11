@@ -40,6 +40,8 @@ const NAV_ITEMS = [
       { icon: 'bi-lightbulb', label: 'Mẹo ngữ pháp', path: '/grammar/meo' },
     ]
   },
+  { section: 'CỘNG ĐỒNG' },
+  { icon: 'bi-chat-square-quote', label: 'Review đề thi', path: '/exam-review', color: 'var(--primary-light)' },
 ];
 
 export function renderSidebar() {
@@ -371,4 +373,3 @@ function showUpdatesModal(updates, isLive = true) {
     }
   });
 }
-

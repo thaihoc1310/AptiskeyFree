@@ -180,9 +180,19 @@ wait
 echo "  Audio: $count/$total_audio done"
 
 # ============================================================
-# 5. CLEANUP & VERIFY
+# 5. EXAM REVIEWS
 # ============================================================
-echo "=== [5/5] CLEANUP & VERIFY ==="
+echo "=== [5/6] DOWNLOADING APPROVED EXAM REVIEWS ==="
+if command -v node >/dev/null 2>&1; then
+  node "$SCRIPT_DIR/scripts/fetch-exam-reviews.mjs"
+else
+  echo "  WARNING: Node.js is required to update exam reviews" >&2
+fi
+
+# ============================================================
+# 6. CLEANUP & VERIFY
+# ============================================================
+echo "=== [6/6] CLEANUP & VERIFY ==="
 # Remove error pages from JS if any
 for f in "$OUT"/js/*; do
   if head -3 "$f" 2>/dev/null | grep -qi "403\|404\|forbidden\|DOCTYPE html"; then
