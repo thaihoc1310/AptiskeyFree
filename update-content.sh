@@ -8,15 +8,25 @@ OUT="$SCRIPT_DIR/public/crawled_data"
 # Create directories (no html dir needed)
 mkdir -p "$OUT/js" "$OUT/css" "$OUT/images/assets/img" "$OUT/images/speaking/part2" "$OUT/images/speaking/part3" "$OUT/images/meolisteningcau15" "$OUT/audio"
 
-# Download only if newer and exists (no 404 pages)
+# Always download the latest copy. The origin's Last-Modified header is not
+# reliable, so conditional requests (-z) can incorrectly keep stale files.
+# Download to a temporary file first to avoid corrupting a good local copy
+# when a request fails, then atomically overwrite the destination.
 dl() {
   local url="$1"
   local dest="$2"
+  local tmp="${dest}.tmp"
+
   mkdir -p "$(dirname "$dest")"
-  if [ -f "$dest" ]; then
-    curl -s -f -z "$dest" "$url" -o "$dest" || true
+
+  if curl -sS -fL \
+      -H "Cache-Control: no-cache" \
+      --retry 2 \
+      "$url" -o "$tmp"; then
+    mv -f "$tmp" "$dest"
   else
-    curl -s -f "$url" -o "$dest" || true
+    rm -f "$tmp"
+    echo "  WARNING: failed to download $url" >&2
   fi
 }
 
@@ -78,8 +88,7 @@ echo "  Writing JS done"
 for f in speaking_question1 speaking_question1_practice speaking_question1_total \
          speaking_question2 speaking_question2_practice speaking_question2_meo \
          speaking_question3 speaking_question3_practice \
-         speaking_question4 speaking_question4_practice speaking_question4_total \
-         speaking_meo; do
+         speaking_question4 speaking_question4_practice speaking_question4_total; do
   dl "$BASE/js/speaking/${f}.js" "$OUT/js/js_speaking_${f}.js" &
 done
 wait
@@ -128,7 +137,7 @@ echo "  Speaking part2 images done"
 for i in $(seq -f "%02g" 1 25); do
   dl "$BASE/images/speaking/part3/de${i}_1.png" "$OUT/images/speaking/part3/de${i}_1.png" &
   dl "$BASE/images/speaking/part3/de${i}_2.png" "$OUT/images/speaking/part3/de${i}_2.png" &
-  if [ $((i % 5)) -eq 0 ]; then wait; fi
+  if [ $((10#$i % 5)) -eq 0 ]; then wait; fi
 done
 wait
 echo "  Speaking part3 images done"
@@ -154,7 +163,13 @@ count=0
 while IFS= read -r audio_path; do
   dir="$OUT/audio/$(dirname "$audio_path")"
   mkdir -p "$dir"
-  dl "$BASE/$audio_path" "$OUT/audio/$audio_path" &
+  audio_url="$BASE/$audio_path"
+  # listeningkey012 points at question17, but the origin stores this file
+  # under question16. Keep the local path expected by the crawled JS.
+  if [ "$audio_path" = "audio/question17/2_scientist_biography_verson1.mp3" ]; then
+    audio_url="$BASE/audio/question16/2_scientist_biography_verson1.mp3"
+  fi
+  dl "$audio_url" "$OUT/audio/$audio_path" &
   count=$((count+1))
   if [ $((count % 15)) -eq 0 ]; then
     wait
