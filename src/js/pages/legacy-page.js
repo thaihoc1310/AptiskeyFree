@@ -657,6 +657,9 @@ function wireResultFeedback() {
   document.querySelectorAll('#checkResultButton, #confirmSubmitBtn, [id*="checkResult"], [id*="submitTest"]').forEach((button) => {
     if (button.dataset.feedbackBound) return;
     button.dataset.feedbackBound = 'true';
+    if (button.closest('.modal') && !button.hasAttribute('data-bs-dismiss')) {
+      button.setAttribute('data-bs-dismiss', 'modal');
+    }
     button.addEventListener('click', () => {
       window.setTimeout(() => {
         colorResultRows();
@@ -1090,30 +1093,56 @@ function installSortableShim() {
   window.Sortable = class Sortable {
     constructor(element, options = {}) {
       if (!element) return;
+
+      const existing = element.__legacySortable;
+      if (existing) {
+        existing.options = options;
+        existing.cancelTouchDrag();
+        existing.refresh();
+        return existing;
+      }
+
       this.element = element;
       this.options = options;
+      this.dragged = null;
+      this.touchState = null;
+      this.touchTimer = null;
+      element.__legacySortable = this;
       this.enable();
     }
 
     enable() {
-      let dragged = null;
-
       const setupChild = (child) => {
         if (child._sortableActive) return;
         child._sortableActive = true;
         child.draggable = true;
         child.addEventListener('dragstart', () => {
-          dragged = child;
+          this.dragged = child;
           child.classList.add('is-dragging');
         });
         child.addEventListener('dragend', () => {
           child.classList.remove('is-dragging');
           this.options.onEnd?.({ item: child, to: this.element });
+          if (this.dragged === child) this.dragged = null;
         });
+        child.addEventListener('touchstart', (event) => {
+          this.startTouchDrag(child, event);
+        }, { passive: true });
+        child.addEventListener('touchmove', (event) => {
+          this.moveTouchDrag(event);
+        }, { passive: false });
+        child.addEventListener('touchend', (event) => {
+          this.finishTouchDrag(event);
+        }, { passive: false });
+        child.addEventListener('touchcancel', () => {
+          this.cancelTouchDrag();
+        }, { passive: true });
       };
 
+      this.setupChild = setupChild;
+
       // Set up initial children
-      this.element.querySelectorAll(':scope > *').forEach(setupChild);
+      this.refresh();
 
       // Watch for dynamically added children
       const observer = new MutationObserver(() => {
@@ -1123,14 +1152,84 @@ function installSortableShim() {
 
       this.element.addEventListener('dragover', (event) => {
         event.preventDefault();
-        const after = getDragAfterElement(this.element, event.clientY);
-        if (!dragged) return;
-        if (after == null) this.element.appendChild(dragged);
-        else this.element.insertBefore(dragged, after);
+        this.moveDraggedItem(event.clientY);
       });
       this.element.addEventListener('drop', () => {
-        if (dragged) this.options.onAdd?.({ item: dragged, to: this.element });
+        if (!this.dragged) return;
+        this.options.onAdd?.({ item: this.dragged, to: this.element });
+        this.dragged = null;
       });
+    }
+
+    refresh() {
+      this.element.querySelectorAll(':scope > *').forEach(this.setupChild);
+    }
+
+    moveDraggedItem(clientY) {
+      if (!this.dragged) return;
+      const after = getDragAfterElement(this.element, clientY);
+      if (after == null) this.element.appendChild(this.dragged);
+      else this.element.insertBefore(this.dragged, after);
+    }
+
+    startTouchDrag(child, event) {
+      if (event.touches.length !== 1) return;
+      this.cancelTouchDrag();
+
+      const touch = event.touches[0];
+      this.touchState = {
+        item: child,
+        identifier: touch.identifier,
+        startX: touch.clientX,
+        startY: touch.clientY,
+        active: false,
+      };
+      this.touchTimer = window.setTimeout(() => {
+        if (!this.touchState || this.touchState.item !== child) return;
+        this.touchState.active = true;
+        this.dragged = child;
+        child.classList.add('is-dragging', 'is-touch-dragging');
+      }, 180);
+    }
+
+    moveTouchDrag(event) {
+      const state = this.touchState;
+      if (!state) return;
+      const touch = [...event.touches].find((item) => item.identifier === state.identifier);
+      if (!touch) return;
+
+      if (!state.active) {
+        const distance = Math.hypot(touch.clientX - state.startX, touch.clientY - state.startY);
+        if (distance > 10) this.cancelTouchDrag();
+        return;
+      }
+
+      event.preventDefault();
+      this.moveDraggedItem(touch.clientY);
+      if (touch.clientY < 72) window.scrollBy({ top: -12, behavior: 'auto' });
+      else if (touch.clientY > window.innerHeight - 72) window.scrollBy({ top: 12, behavior: 'auto' });
+    }
+
+    finishTouchDrag(event) {
+      const state = this.touchState;
+      if (!state) return;
+      const ended = [...event.changedTouches].some((item) => item.identifier === state.identifier);
+      if (!ended) return;
+
+      if (state.active) {
+        event.preventDefault();
+        this.options.onAdd?.({ item: state.item, to: this.element });
+        this.options.onEnd?.({ item: state.item, to: this.element });
+      }
+      this.cancelTouchDrag();
+    }
+
+    cancelTouchDrag() {
+      if (this.touchTimer) window.clearTimeout(this.touchTimer);
+      this.touchTimer = null;
+      this.touchState?.item.classList.remove('is-dragging', 'is-touch-dragging');
+      this.touchState = null;
+      this.dragged = null;
     }
   };
 }

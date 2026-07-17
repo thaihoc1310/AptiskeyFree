@@ -797,10 +797,17 @@ body.focus-mode .app-content {
 
 .legacy-content [draggable="true"] {
   user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .legacy-content .is-dragging {
   opacity: .55;
+}
+
+.legacy-content .is-touch-dragging {
+  touch-action: none;
+  transform: scale(.99);
 }
 
 .legacy-content .modal {
@@ -857,7 +864,8 @@ body.focus-mode .app-content {
   display: none !important;
 }
 
-.legacy-content #confirmationModal .modal-footer {
+.legacy-content #confirmationModal .modal-footer,
+.legacy-content #confirmModal .modal-footer {
   display: flex !important;
 }
 
