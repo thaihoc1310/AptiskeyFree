@@ -45,7 +45,7 @@ const NAV_ITEMS = [
   { icon: 'bi-chat-square-quote', label: 'Review đề thi', path: '/exam-review', color: 'var(--primary-light)' },
 ];
 
-export function renderSidebar() {
+export function renderSidebar(user) {
   const currentPath = getCurrentPath();
   let html = `
     <aside class="sidebar" id="sidebar">
@@ -97,6 +97,17 @@ export function renderSidebar() {
     }
   }
 
+  if (user?.role === 'admin') {
+    const active = isPathActive(currentPath, '/admin') ? ' active' : '';
+    html += `<div class="sidebar-section-title">QUẢN TRỊ</div>
+      <div class="nav-item">
+        <a href="#/admin" class="nav-link${active}">
+          <i class="bi bi-people"></i>
+          <span class="sidebar-text">Quản lý tài khoản</span>
+        </a>
+      </div>`;
+  }
+
   html += `</nav></aside><div class="sidebar-overlay" id="sidebarOverlay"></div>`;
   return html;
 }
@@ -144,7 +155,7 @@ function syncActiveNav() {
   });
 }
 
-export function renderHeader(title = 'Trang chủ', breadcrumbs = []) {
+export function renderHeader(user, title = 'Trang chủ', breadcrumbs = []) {
   let bc = '';
   for (const b of breadcrumbs) {
     if (bc) bc += `<span class="sep">/</span>`;
@@ -165,8 +176,13 @@ export function renderHeader(title = 'Trang chủ', breadcrumbs = []) {
           <i class="bi bi-moon-stars"></i>
         </button>
         <div class="avatar-container">
-          <div class="header-avatar" id="userAvatar">K</div>
+          <button class="header-avatar" id="userAvatar" type="button" aria-label="Mở menu tài khoản">${(user?.username || 'K').slice(0, 1).toUpperCase()}</button>
           <div class="avatar-dropdown" id="avatarDropdown">
+            <div class="dropdown-user">
+              <span>${(user?.username || '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')}</span>
+              <small>${user?.role === 'admin' ? 'Quản trị viên' : 'Học viên'}</small>
+            </div>
+            ${user?.role === 'admin' ? '<a href="#/admin" class="dropdown-admin-link"><i class="bi bi-people"></i>Quản lý tài khoản</a>' : ''}
             <div class="dropdown-header">Lịch sử cập nhật đề</div>
             <div class="dropdown-body" id="dropdownUpdateLogs">
               <div class="dropdown-loading">
@@ -175,6 +191,7 @@ export function renderHeader(title = 'Trang chủ', breadcrumbs = []) {
             </div>
             <div class="dropdown-footer">
               <button id="viewAllUpdatesBtn" class="view-all-btn">Xem tất cả</button>
+              <button id="logoutBtn" class="logout-btn" type="button"><i class="bi bi-box-arrow-right"></i>Đăng xuất</button>
             </div>
           </div>
         </div>
@@ -182,7 +199,7 @@ export function renderHeader(title = 'Trang chủ', breadcrumbs = []) {
     </header>`;
 }
 
-export function initHeader() {
+export function initHeader({ onLogout } = {}) {
   document.getElementById('sidebarToggle')?.addEventListener('click', () => {
     const sidebar = document.getElementById('sidebar');
     // Mobile: toggle mobile-open
@@ -207,6 +224,7 @@ export function initHeader() {
   const dropdown = document.getElementById('avatarDropdown');
 
   if (avatar && dropdown) {
+    document.getElementById('logoutBtn')?.addEventListener('click', () => onLogout?.());
     avatar.addEventListener('click', async (e) => {
       e.stopPropagation();
       const isOpen = dropdown.classList.contains('show');

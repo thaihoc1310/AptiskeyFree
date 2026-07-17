@@ -4,33 +4,38 @@ import './css/home.css';
 import './css/pages.css';
 import './css/quiz.css';
 import './css/legacy.css';
+import './css/admin.css';
 import { route, startRouter, setContent } from './js/router.js';
 import { renderSidebar, renderHeader, initSidebar, initHeader } from './js/layout.js';
+import { loadSession, logout } from './js/auth.js';
 import { renderHome } from './js/pages/home.js';
 import { renderReadingQuestion, renderReadingBode } from './js/pages/reading.js';
 import { renderListeningQuestion, renderListeningBode } from './js/pages/listening.js';
 import { renderSpeakingQuestion, renderWritingBode, renderGrammarBode } from './js/pages/other-nav.js';
 import { initExamReview, renderExamReview } from './js/pages/exam-review.js';
 import { initScoreLogic, renderScoreLogic } from './js/pages/score-logic.js';
+import { initAdmin, renderAdmin } from './js/pages/admin.js';
 import { detailConfig, initLegacyPage, initTimeSetup, renderLegacyPage, renderTimeSetup, staticConfig, teardownLegacyPage, timerStorageKey } from './js/pages/legacy-page.js';
 
 // Apply saved theme
 const savedTheme = localStorage.getItem('theme') || 'dark';
 document.documentElement.setAttribute('data-theme', savedTheme);
 
+let currentSession = null;
+
 function initApp() {
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="app">
-      ${renderSidebar()}
+      ${renderSidebar(currentSession.user)}
       <div class="app-main" id="appMain">
-        ${renderHeader()}
+        ${renderHeader(currentSession.user)}
         <main class="app-content" id="app-content"></main>
         <footer class="app-footer">© 2026 AptiskeyFree — Ôn luyện Aptis hiệu quả</footer>
       </div>
     </div>`;
   initSidebar();
-  initHeader();
+  initHeader({ onLogout: logout });
   if (savedTheme === 'dark') {
     const icon = document.querySelector('#themeToggle i');
     if (icon) icon.className = 'bi bi-sun';
@@ -59,6 +64,21 @@ route('/exam-review', () => {
 route('/score-logic', () => {
   mountPage(renderScoreLogic());
   initScoreLogic();
+});
+
+route('/admin', () => {
+  if (currentSession?.user?.role !== 'admin') {
+    mountPage(`
+      <div class="text-center" style="padding: 4rem 0;">
+        <h2 style="font-size:4rem; margin-bottom:1rem;">🔒</h2>
+        <h3>Bạn không có quyền truy cập</h3>
+        <p>Trang này chỉ dành cho quản trị viên.</p>
+        <a href="#/" class="btn btn-primary" style="margin-top:1rem;">Về trang chủ</a>
+      </div>`);
+    return;
+  }
+  mountPage(renderAdmin());
+  initAdmin();
 });
 
 async function mountLegacy(config) {
@@ -138,6 +158,18 @@ route('*', () => {
     </div>`);
 });
 
-// Boot
-initApp();
-startRouter();
+// Boot only after the server has validated the HttpOnly session cookie.
+async function boot() {
+  try {
+    currentSession = await loadSession();
+    initApp();
+    startRouter();
+  } catch (error) {
+    if (error.isAuthRedirect) return;
+    console.error(error);
+    const app = document.getElementById('app');
+    if (app) app.innerHTML = '<main class="app-boot-error"><h1>Không thể tải ứng dụng</h1><p>Vui lòng tải lại trang hoặc đăng nhập lại.</p><a class="btn btn-primary" href="/login">Đăng nhập</a></main>';
+  }
+}
+
+boot();

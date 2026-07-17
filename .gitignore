@@ -7,6 +7,11 @@ dist-ssr/
 
 # Local env files
 *.local
+.dev.vars
+.wrangler/
+wrangler.json
+wrangler.jsonc
+wrangler.toml
 
 # Editor / IDE settings
 .vscode/
@@ -32,6 +37,5 @@ Thumbs.db
 
 # Agent documentation
 /implementation_plan.md
-
 
 

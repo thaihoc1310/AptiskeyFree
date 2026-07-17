@@ -448,13 +448,11 @@ body.focus-mode .header-avatar {
 
 @media (max-width: 520px) {
   .breadcrumb {
-    max-width: 54vw;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: none;
   }
 
   .header-avatar {
-    display: none;
+    display: flex;
   }
 }
 
@@ -498,6 +496,40 @@ body.focus-mode .header-avatar {
   color: var(--text-primary);
   border-bottom: 1px solid var(--border-color);
   background: rgba(255, 255, 255, 0.02);
+}
+
+.dropdown-user {
+  display: grid;
+  gap: 2px;
+  padding: var(--space-4);
+}
+
+.dropdown-user span {
+  color: var(--text-primary);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
+}
+
+.dropdown-user small {
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+}
+
+.dropdown-admin-link {
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
+  color: var(--primary-light);
+  display: flex;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+}
+
+.dropdown-admin-link:hover {
+  background: rgba(94, 106, 210, .1);
+  color: var(--text-primary);
 }
 
 .avatar-dropdown .dropdown-body {
@@ -571,6 +603,7 @@ body.focus-mode .header-avatar {
   border-top: 1px solid var(--border-color);
   background: rgba(255, 255, 255, 0.02);
   display: flex;
+  gap: var(--space-2);
 }
 
 .view-all-btn {
@@ -590,6 +623,26 @@ body.focus-mode .header-avatar {
 .view-all-btn:hover {
   background: var(--primary-dark);
   transform: translateY(-1px);
+}
+
+.logout-btn {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  display: flex;
+  flex: 0 0 auto;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  gap: 5px;
+  padding: var(--space-2) var(--space-3);
+}
+
+.logout-btn:hover {
+  background: var(--error-light);
+  border-color: rgba(255, 107, 122, .22);
+  color: var(--error);
 }
 
 /* Updates Modal */
