@@ -24,6 +24,34 @@ function randomPassword() {
   return `Ak!${[...bytes].map((byte) => alphabet[byte % alphabet.length]).join('')}`;
 }
 
+function randomUsername() {
+  const alphabet = 'abcdefghjkmnpqrstuvwxyz23456789';
+  for (let attempt = 0; attempt < 10; attempt += 1) {
+    const bytes = crypto.getRandomValues(new Uint8Array(6));
+    const suffix = [...bytes].map((byte) => alphabet[byte % alphabet.length]).join('');
+    const username = `aptis${suffix}`;
+    if (!users.some((user) => user.username === username)) return username;
+  }
+  return `aptis${Date.now().toString(36).slice(-8)}`;
+}
+
+function generateAccount(form) {
+  const credentials = { username: randomUsername(), password: randomPassword() };
+  form.elements.username.value = credentials.username;
+  form.elements.password.value = credentials.password;
+  form.elements.role.value = 'user';
+  return credentials;
+}
+
+async function copyCredentials(username, password) {
+  const value = `${username}\t${password}`;
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+  window.prompt('Sao chép tài khoản và mật khẩu:', value);
+}
+
 async function responseData(response) {
   const data = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(data.message || 'Không thể hoàn tất yêu cầu.');
@@ -130,7 +158,10 @@ export function renderAdmin() {
     <section class="admin-page animate-fade-in">
       <div class="admin-heading">
         <div><span class="admin-eyebrow">Quản trị hệ thống</span><h1>Quản lý tài khoản</h1><p>Tạo, phân quyền, khóa và đặt lại mật khẩu người dùng.</p></div>
-        <button class="btn btn-primary" id="adminOpenCreate" type="button"><i class="bi bi-person-plus"></i>Thêm tài khoản</button>
+        <div class="admin-heading-actions">
+          <button class="btn btn-secondary" id="adminQuickGenerate" type="button"><i class="bi bi-stars"></i>Gen nhanh</button>
+          <button class="btn btn-primary" id="adminOpenCreate" type="button"><i class="bi bi-person-plus"></i>Thêm tài khoản</button>
+        </div>
       </div>
       <div class="admin-stats">
         <article><span><i class="bi bi-people"></i></span><div><small>Tổng hiển thị</small><strong id="adminUserCount">—</strong></div></article>
@@ -138,12 +169,15 @@ export function renderAdmin() {
         <article><span class="is-database"><i class="bi bi-database-check"></i></span><div><small>Dữ liệu</small><strong>Cloudflare D1</strong></div></article>
       </div>
       <div class="admin-create" id="adminCreatePanel" hidden>
-        <div class="admin-section-title"><div><h2>Tạo tài khoản mới</h2><p>Tài khoản có thể đăng nhập ngay sau khi tạo.</p></div><button type="button" id="adminCloseCreate" aria-label="Đóng">×</button></div>
+        <div class="admin-section-title"><div><h2>Tạo tài khoản mới</h2><p>Gen nhanh sẽ tự sinh cả username và mật khẩu an toàn; admin vẫn có thể chỉnh lại trước khi tạo.</p></div><button type="button" id="adminCloseCreate" aria-label="Đóng">×</button></div>
         <form id="adminCreateForm">
           <label><span>Tên đăng nhập</span><input name="username" pattern="[a-z0-9._-]{3,32}" minlength="3" maxlength="32" autocomplete="off" required placeholder="ví dụ: hocvien21"></label>
           <label><span>Mật khẩu</span><div class="admin-password-field"><input name="password" minlength="10" maxlength="128" autocomplete="new-password" required><button type="button" id="adminGeneratePassword">Tạo mới</button></div></label>
           <label><span>Vai trò</span><select name="role"><option value="user">Học viên</option><option value="admin">Quản trị viên</option></select></label>
-          <button class="btn btn-primary" type="submit"><i class="bi bi-plus-lg"></i>Tạo tài khoản</button>
+          <div class="admin-create-actions">
+            <button class="btn btn-secondary" id="adminCopyDraft" type="button"><i class="bi bi-copy"></i>Sao chép</button>
+            <button class="btn btn-primary" type="submit"><i class="bi bi-plus-lg"></i>Tạo tài khoản</button>
+          </div>
         </form>
         <div class="admin-created-result" id="adminCreatedResult" hidden></div>
       </div>
@@ -160,16 +194,38 @@ export function initAdmin() {
   const form = document.getElementById('adminCreateForm');
   document.getElementById('adminOpenCreate')?.addEventListener('click', () => {
     panel.hidden = false;
-    form.username.focus();
+    form.elements.username.focus();
+  });
+  document.getElementById('adminQuickGenerate')?.addEventListener('click', () => {
+    panel.hidden = false;
+    generateAccount(form);
+    form.elements.username.select();
+    panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    notify('Đã gen username và mật khẩu mới. Kiểm tra rồi bấm “Tạo tài khoản”.');
   });
   document.getElementById('adminCloseCreate')?.addEventListener('click', () => { panel.hidden = true; });
-  document.getElementById('adminGeneratePassword')?.addEventListener('click', () => { form.password.value = randomPassword(); });
-  form.password.value = randomPassword();
+  document.getElementById('adminGeneratePassword')?.addEventListener('click', () => { form.elements.password.value = randomPassword(); });
+  document.getElementById('adminCopyDraft')?.addEventListener('click', async () => {
+    const username = form.elements.username.value.trim();
+    const password = form.elements.password.value;
+    if (!username || !password) return notify('Hãy nhập hoặc gen tài khoản trước khi sao chép.', 'error');
+    try {
+      await copyCredentials(username, password);
+      notify('Đã sao chép username và mật khẩu.');
+    } catch {
+      notify('Không thể sao chép tự động. Vui lòng sao chép trực tiếp trong form.', 'error');
+    }
+  });
+  form.elements.password.value = randomPassword();
 
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     const submit = form.querySelector('[type="submit"]');
-    const credentials = { username: form.username.value.trim().toLowerCase(), password: form.password.value, role: form.role.value };
+    const credentials = {
+      username: form.elements.username.value.trim().toLowerCase(),
+      password: form.elements.password.value,
+      role: form.elements.role.value,
+    };
     submit.disabled = true;
     try {
       await responseData(await authenticatedFetch('/api/admin/users', { method: 'POST', body: JSON.stringify(credentials) }));
@@ -177,11 +233,15 @@ export function initAdmin() {
       result.hidden = false;
       result.innerHTML = `<div><strong>Đã tạo tài khoản</strong><code>${escapeHtml(credentials.username)} / ${escapeHtml(credentials.password)}</code></div><button type="button">Sao chép</button>`;
       result.querySelector('button').addEventListener('click', async () => {
-        await navigator.clipboard.writeText(`${credentials.username}\t${credentials.password}`);
-        notify('Đã sao chép tài khoản và mật khẩu.');
+        try {
+          await copyCredentials(credentials.username, credentials.password);
+          notify('Đã sao chép tài khoản và mật khẩu.');
+        } catch {
+          notify('Không thể sao chép tự động.', 'error');
+        }
       });
       form.reset();
-      form.password.value = randomPassword();
+      form.elements.password.value = randomPassword();
       await loadUsers();
     } catch (error) {
       notify(error.message, 'error');

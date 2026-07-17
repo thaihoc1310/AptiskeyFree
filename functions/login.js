@@ -45,7 +45,6 @@ function html(value, nonce) {
         <h1>Học Aptis<br><span>có hệ thống.</span></h1>
         <p>Truy cập bộ đề, đáp án và công cụ luyện thi trong không gian học tập dành riêng cho thành viên.</p>
       </div>
-      <div class="status"><span class="dot"></span>Kết nối bảo mật · Phiên đăng nhập 24 giờ</div>
     </section>
     <section class="panel">
       <span class="eyebrow">Member access</span>
