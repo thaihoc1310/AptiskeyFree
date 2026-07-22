@@ -1,6 +1,7 @@
 ﻿// Lịch sử cập nhật đề
 document.addEventListener("DOMContentLoaded", function () {
   const updates = [
+    { date: "22/7/2026", text:  "Reading part1 (học theo câu hỏi): thêm bộ đề 46-48. <a href='reading_question1.html' target='_blank'>Xem tại đây</a>" },
     { date: "16/7/2026", text:  "Thông báo: Nhằm nâng cao chất lượng đào tạo và hướng tới phương châm “Học thật – Thi đạt”, Aptis Keys sẽ chuyển đổi sang mô hình khóa học trực tuyến có giáo viên trực tiếp hướng dẫn và đồng hành cùng học viên. Vì vậy, chức năng gia hạn không còn nữa (bạn nào tk còn hạn thì vẫn học tiếp). Xem khóa học bên mình <a href='green-aptis.html' target='_blank'>tại đây</a>." },
     { date: "15/7/2026", text:  "Cập nhật thêm 5 bài luyện tập Ngữ pháp do Aptis Keys tự biên soạn, dựa trên định dạng và các dạng kỹ năng được công bố công khai của bài thi Aptis ESOL. <a href='grammar_bode.html' target='_blank'>Xem tại đây</a>" },
     { date: "14/7/2026", text:  "Thư xin lỗi về sự cố bảo mật. <a href='sucobaomat.html' target='_blank'>Xem tại đây</a>" },
