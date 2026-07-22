@@ -42,7 +42,6 @@ const NAV_ITEMS = [
   },
   { section: 'KHÁC' },
   { icon: 'bi-calculator', label: 'Tính điểm Overall', path: '/score-logic', color: 'var(--accent-grammar)' },
-  { icon: 'bi-chat-square-quote', label: 'Review đề thi', path: '/exam-review', color: 'var(--primary-light)' },
 ];
 
 export function renderSidebar(user) {

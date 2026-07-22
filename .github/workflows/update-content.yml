@@ -22,12 +22,6 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y curl
 
       - name: 🚀 Cập nhật nội dung public và Speaking
-        env:
-          APTISKEY_EMAIL: ${{ secrets.APTISKEY_EMAIL }}
-          # The one-time reset workflow promoted APTISKEY_NEW_PASSWORD to the
-          # account's current password. Keep the old secret as a fallback for
-          # repositories where that reset was never run.
-          APTISKEY_PASSWORD: ${{ secrets.APTISKEY_NEW_PASSWORD || secrets.APTISKEY_PASSWORD }}
         run: |
           chmod +x ./update-content.sh
           ./update-content.sh

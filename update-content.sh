@@ -36,7 +36,7 @@ dl() {
 # ============================================================
 # 1. UPDATEABLE JS FILES
 # ============================================================
-echo "=== [1/5] DOWNLOADING PUBLIC/SHARED JS ==="
+echo "=== [1/4] DOWNLOADING PUBLIC/SHARED JS ==="
 
 # Common JS
 dl "$BASE/js/common.js" "$OUT/js/js_common.js" &
@@ -58,14 +58,14 @@ echo "  Speaking JS done"
 # ============================================================
 # 2. SHARED CSS
 # ============================================================
-echo "=== [2/5] DOWNLOADING SHARED CSS ==="
+echo "=== [2/4] DOWNLOADING SHARED CSS ==="
 dl "$BASE/css/adminlte/adminlte.css" "$OUT/css/adminlte.css"
 echo "  CSS done"
 
 # ============================================================
 # 3. IMAGES
 # ============================================================
-echo "=== [3/5] DOWNLOADING SHARED/SPEAKING IMAGES ==="
+echo "=== [3/4] DOWNLOADING SHARED/SPEAKING IMAGES ==="
 # Avatars/assets
 for f in AdminLTELogo.png avatar.png avatar3.png avatar4.png avatar5.png; do
   dl "$BASE/images/assets/img/$f" "$OUT/images/assets/img/$f" &
@@ -94,19 +94,9 @@ wait
 echo "  Speaking part3 images done"
 
 # ============================================================
-# 4. EXAM REVIEWS
+# 4. CLEANUP & VERIFY
 # ============================================================
-echo "=== [4/5] DOWNLOADING APPROVED EXAM REVIEWS ==="
-if command -v node >/dev/null 2>&1; then
-  node "$SCRIPT_DIR/scripts/fetch-exam-reviews.mjs"
-else
-  echo "  WARNING: Node.js is required to update exam reviews" >&2
-fi
-
-# ============================================================
-# 5. CLEANUP & VERIFY
-# ============================================================
-echo "=== [5/5] CLEANUP & VERIFY ==="
+echo "=== [4/4] CLEANUP & VERIFY ==="
 # Remove error pages from JS if any
 for f in "$OUT"/js/*; do
   if head -3 "$f" 2>/dev/null | grep -qi "403\|404\|forbidden\|DOCTYPE html"; then
