@@ -44,12 +44,34 @@ function generateAccount(form) {
 }
 
 async function copyCredentials(username, password) {
-  const value = `${username}\t${password}`;
-  if (navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(value);
-    return;
+  const value = `${username}\n${password}`;
+  if (window.isSecureContext && navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(value);
+      return true;
+    } catch {
+      // iOS Safari can reject Clipboard API calls after an async request.
+    }
   }
-  window.prompt('Sao chép tài khoản và mật khẩu:', value);
+
+  const textarea = document.createElement('textarea');
+  textarea.value = value;
+  textarea.readOnly = true;
+  textarea.setAttribute('aria-hidden', 'true');
+  textarea.style.cssText = 'position:fixed;top:0;left:-9999px;width:1px;height:1px;opacity:0;font-size:16px;';
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  textarea.setSelectionRange(0, value.length);
+  let copied = false;
+  try {
+    copied = document.execCommand('copy');
+  } catch {
+    copied = false;
+  }
+  textarea.remove();
+  if (!copied) window.prompt('Nhấn giữ để sao chép tài khoản:', value);
+  return copied;
 }
 
 async function responseData(response) {
@@ -89,10 +111,11 @@ function renderRows() {
       </div>
       <div class="admin-user-date"><small>Ngày tạo</small><span>${escapeHtml(formatDate(user.createdAt))}</span></div>
       <div class="admin-user-actions">
-        <button type="button" data-action="role" title="Đổi vai trò"><i class="bi bi-shield-check"></i></button>
-        <button type="button" data-action="password" title="Đặt lại mật khẩu"><i class="bi bi-key"></i></button>
-        <button type="button" data-action="active" title="${user.isActive ? 'Khóa' : 'Mở khóa'}"><i class="bi ${user.isActive ? 'bi-lock' : 'bi-unlock'}"></i></button>
-        <button type="button" data-action="delete" class="is-danger" title="Xóa tài khoản"><i class="bi bi-trash3"></i></button>
+        <button type="button" data-action="copy" title="Tạo mật khẩu mới & sao chép tài khoản" aria-label="Tạo mật khẩu mới và sao chép"><i class="bi bi-copy"></i><span>Copy</span></button>
+        <button type="button" data-action="role" title="Đổi vai trò" aria-label="Đổi vai trò"><i class="bi bi-shield-check"></i><span>Vai trò</span></button>
+        <button type="button" data-action="password" title="Đặt lại mật khẩu" aria-label="Đặt lại mật khẩu"><i class="bi bi-key"></i><span>Mật khẩu</span></button>
+        <button type="button" data-action="active" title="${user.isActive ? 'Khóa' : 'Mở khóa'}" aria-label="${user.isActive ? 'Khóa tài khoản' : 'Mở khóa tài khoản'}"><i class="bi ${user.isActive ? 'bi-lock' : 'bi-unlock'}"></i><span>${user.isActive ? 'Khóa' : 'Mở'}</span></button>
+        <button type="button" data-action="delete" class="is-danger" title="Xóa tài khoản" aria-label="Xóa tài khoản"><i class="bi bi-trash3"></i><span>Xóa</span></button>
       </div>
     </article>`).join('');
 }
@@ -127,7 +150,23 @@ async function handleAction(button) {
   const action = button.dataset.action;
   button.disabled = true;
   try {
-    if (action === 'active') {
+    if (action === 'copy') {
+      if (!window.confirm(`Tạo mật khẩu mới cho “${user.username}” và sao chép thông tin đăng nhập? Session hiện tại của tài khoản này sẽ hết hiệu lực.`)) return;
+      const password = randomPassword();
+      // Start copying while the tap is still an active user gesture. iOS Safari
+      // blocks Clipboard API calls that begin only after awaiting the API.
+      const copyPromise = copyCredentials(user.username, password);
+      const updatePromise = authenticatedFetch(`/api/admin/users/${encodeURIComponent(user.id)}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ password }),
+      }).then(responseData);
+      const [copied, data] = await Promise.all([copyPromise, updatePromise]);
+      users = users.map((entry) => entry.id === user.id ? data.user : entry);
+      renderRows();
+      notify(copied
+        ? `Đã tạo mật khẩu mới và sao chép “${user.username}” theo định dạng 2 dòng.`
+        : `Đã tạo mật khẩu mới cho “${user.username}”. Hãy sao chép từ hộp thoại vừa mở.`);
+    } else if (action === 'active') {
       if (!window.confirm(`${user.isActive ? 'Khóa' : 'Mở khóa'} tài khoản “${user.username}”?`)) return;
       await updateUser(user, { isActive: !user.isActive }, `Đã ${user.isActive ? 'khóa' : 'mở khóa'} ${user.username}.`);
     } else if (action === 'role') {
@@ -165,7 +204,7 @@ export function renderAdmin() {
       </div>
       <div class="admin-stats">
         <article><span><i class="bi bi-people"></i></span><div><small>Tổng hiển thị</small><strong id="adminUserCount">—</strong></div></article>
-        <article><span class="is-secure"><i class="bi bi-shield-lock"></i></span><div><small>Bảo mật</small><strong>JWT · 24 giờ</strong></div></article>
+        <article><span class="is-secure"><i class="bi bi-shield-lock"></i></span><div><small>Thời hạn JWT</small><strong>User 24 giờ · Admin 1 năm</strong></div></article>
         <article><span class="is-database"><i class="bi bi-database-check"></i></span><div><small>Dữ liệu</small><strong>Cloudflare D1</strong></div></article>
       </div>
       <div class="admin-create" id="adminCreatePanel" hidden>

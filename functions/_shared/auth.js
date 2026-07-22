@@ -1,7 +1,8 @@
 import { HttpError } from './http.js';
 
-export const SESSION_SECONDS = 24 * 60 * 60;
-export const PASSWORD_ITERATIONS = 210_000;
+export const USER_SESSION_SECONDS = 24 * 60 * 60;
+export const ADMIN_SESSION_SECONDS = 365 * 24 * 60 * 60;
+export const PASSWORD_ITERATIONS = 100_000;
 export const SESSION_COOKIE = 'aptiskey_session';
 
 const encoder = new TextEncoder();
@@ -55,6 +56,7 @@ async function hmacKey(secret) {
 
 export async function createSessionToken(user, env) {
   const now = Math.floor(Date.now() / 1000);
+  const sessionSeconds = sessionSecondsForRole(user.role);
   const header = encodeJson({ alg: 'HS256', typ: 'JWT' });
   const payload = encodeJson({
     iss: JWT_ISSUER,
@@ -66,7 +68,7 @@ export async function createSessionToken(user, env) {
     csrf: randomToken(24),
     jti: crypto.randomUUID(),
     iat: now,
-    exp: now + SESSION_SECONDS,
+    exp: now + sessionSeconds,
   });
   const content = `${header}.${payload}`;
   const signature = await crypto.subtle.sign('HMAC', await hmacKey(requireSecret(env)), encoder.encode(content));
@@ -118,9 +120,13 @@ export function getCookie(request, name) {
   return null;
 }
 
-export function sessionCookie(token, request) {
+export function sessionSecondsForRole(role) {
+  return role === 'admin' ? ADMIN_SESSION_SECONDS : USER_SESSION_SECONDS;
+}
+
+export function sessionCookie(token, request, role = 'user') {
   const secure = new URL(request.url).protocol === 'https:' ? '; Secure' : '';
-  return `${SESSION_COOKIE}=${token}; Path=/; HttpOnly${secure}; SameSite=Lax; Max-Age=${SESSION_SECONDS}`;
+  return `${SESSION_COOKIE}=${token}; Path=/; HttpOnly${secure}; SameSite=Lax; Max-Age=${sessionSecondsForRole(role)}`;
 }
 
 export function clearSessionCookie(request) {

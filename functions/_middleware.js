@@ -25,7 +25,7 @@ export async function onRequest(context) {
   try {
     // Validate against D1 for documents so disabled/deleted users are revoked
     // immediately. API handlers do their own D1 authorization; static assets
-    // only need the signed, 24-hour JWT.
+    // only need the signed JWT (24 hours for users, one year for admins).
     const authenticated = isDocumentRequest(request)
       ? await getAuthenticatedUser(request, env)
       : await getTokenPayload(request, env);

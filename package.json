@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "test": "node --test",
     "dev": "vite",
     "dev:pages": "npm run build && wrangler pages dev dist",
     "build": "vite build",

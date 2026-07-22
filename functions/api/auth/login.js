@@ -12,7 +12,7 @@ const LOCK_SECONDS = 15 * 60;
 const DUMMY_USER = {
   password_hash: '1Fg97Y5lqU7wZ6roRk9Yz8yN-LorLClwzE9QzF7buzU',
   password_salt: 'aptiskey-dummy-auth-salt',
-  password_iterations: 210_000,
+  password_iterations: 100_000,
 };
 
 function clientIp(request) {
@@ -75,7 +75,7 @@ export async function onRequestPost(context) {
     return json(
       { ok: true, user: { id: user.id, username: user.username, role: user.role } },
       200,
-      { 'Set-Cookie': sessionCookie(token, request) },
+      { 'Set-Cookie': sessionCookie(token, request, user.role) },
     );
   } catch (error) {
     return errorResponse(error);

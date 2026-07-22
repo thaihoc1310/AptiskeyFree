@@ -5,9 +5,11 @@ import './css/pages.css';
 import './css/quiz.css';
 import './css/legacy.css';
 import './css/admin.css';
+import './css/account.css';
 import { route, startRouter, setContent } from './js/router.js';
 import { renderSidebar, renderHeader, initSidebar, initHeader } from './js/layout.js';
 import { loadSession, logout } from './js/auth.js';
+import { openChangePasswordModal } from './js/account.js';
 import { renderHome } from './js/pages/home.js';
 import { renderReadingQuestion, renderReadingBode } from './js/pages/reading.js';
 import { renderListeningQuestion, renderListeningBode } from './js/pages/listening.js';
@@ -35,7 +37,7 @@ function initApp() {
       </div>
     </div>`;
   initSidebar();
-  initHeader({ onLogout: logout });
+  initHeader({ onLogout: logout, onChangePassword: openChangePasswordModal });
   if (savedTheme === 'dark') {
     const icon = document.querySelector('#themeToggle i');
     if (icon) icon.className = 'bi bi-sun';

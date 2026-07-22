@@ -15,6 +15,7 @@ secret named `JWT_SECRET`. Public registration is intentionally not implemented.
 
    ```bash
    npx wrangler d1 execute aptiskey-auth --remote --file=migrations/0001_auth.sql
+   npx wrangler d1 execute aptiskey-auth --remote --file=migrations/0002_cloudflare_pbkdf2.sql
    ```
 
 3. In **Cloudflare Dashboard → Workers & Pages → your Pages project → Settings →
@@ -71,9 +72,10 @@ Functions or D1, so authentication must be tested through `npm run dev:pages`.
 
 ## Security behavior
 
-- Session JWT: HMAC-SHA256, 24-hour expiry.
+- Session JWT: HMAC-SHA256; users expire after 24 hours, admins after one year.
 - Cookie: HttpOnly, SameSite=Lax, Secure on HTTPS.
-- Passwords: PBKDF2-SHA256 with a unique random salt and 210,000 iterations.
+- Passwords: PBKDF2-SHA256 with a unique random salt and 100,000 iterations
+  (the maximum accepted by the Cloudflare Workers runtime).
 - Five failed logins for the same username/IP cause a 15-minute lockout.
 - User disable, role change, password reset, and deletion invalidate existing
   sessions on the next document/API request.

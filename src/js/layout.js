@@ -157,6 +157,7 @@ function syncActiveNav() {
 
 export function renderHeader(user, title = 'Trang chủ', breadcrumbs = []) {
   let bc = '';
+  const isAdmin = user?.role === 'admin';
   for (const b of breadcrumbs) {
     if (bc) bc += `<span class="sep">/</span>`;
     if (b.path) bc += `<a href="#${b.path}">${b.label}</a>`;
@@ -182,7 +183,8 @@ export function renderHeader(user, title = 'Trang chủ', breadcrumbs = []) {
               <span>${(user?.username || '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')}</span>
               <small>${user?.role === 'admin' ? 'Quản trị viên' : 'Học viên'}</small>
             </div>
-            ${user?.role === 'admin' ? '<a href="#/admin" class="dropdown-admin-link"><i class="bi bi-people"></i>Quản lý tài khoản</a>' : ''}
+            <button type="button" class="dropdown-account-link" id="changePasswordBtn"><i class="bi bi-key"></i>Đổi mật khẩu</button>
+            ${isAdmin ? '<a href="#/admin" class="dropdown-admin-link"><i class="bi bi-people"></i>Quản lý tài khoản</a>' : ''}
             <div class="dropdown-header">Lịch sử cập nhật đề</div>
             <div class="dropdown-body" id="dropdownUpdateLogs">
               <div class="dropdown-loading">
@@ -199,7 +201,7 @@ export function renderHeader(user, title = 'Trang chủ', breadcrumbs = []) {
     </header>`;
 }
 
-export function initHeader({ onLogout } = {}) {
+export function initHeader({ onLogout, onChangePassword } = {}) {
   document.getElementById('sidebarToggle')?.addEventListener('click', () => {
     const sidebar = document.getElementById('sidebar');
     // Mobile: toggle mobile-open
@@ -225,6 +227,11 @@ export function initHeader({ onLogout } = {}) {
 
   if (avatar && dropdown) {
     document.getElementById('logoutBtn')?.addEventListener('click', () => onLogout?.());
+    document.getElementById('changePasswordBtn')?.addEventListener('click', () => {
+      dropdown.classList.remove('show');
+      dropdown.style.display = 'none';
+      onChangePassword?.();
+    });
     avatar.addEventListener('click', async (e) => {
       e.stopPropagation();
       const isOpen = dropdown.classList.contains('show');

@@ -1,0 +1,200 @@
+body.account-modal-open {
+  overflow: hidden;
+}
+
+.account-modal {
+  align-items: center;
+  background: rgba(0, 0, 0, .68);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: max(var(--space-4), env(safe-area-inset-top)) max(var(--space-4), env(safe-area-inset-right)) max(var(--space-4), env(safe-area-inset-bottom)) max(var(--space-4), env(safe-area-inset-left));
+  position: fixed;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  z-index: 2100;
+}
+
+.account-dialog {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-2xl);
+  max-height: 100%;
+  overflow-y: auto;
+  width: min(100%, 480px);
+}
+
+.account-dialog-header {
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  gap: var(--space-4);
+  justify-content: space-between;
+  padding: var(--space-6);
+}
+
+.account-dialog-heading {
+  align-items: center;
+  display: flex;
+  gap: var(--space-3);
+}
+
+.account-dialog-heading h2 {
+  font-size: var(--fs-xl);
+  margin-bottom: 3px;
+}
+
+.account-dialog-heading p {
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+}
+
+.account-dialog-icon {
+  align-items: center;
+  background: rgba(94, 106, 210, .16);
+  border: 1px solid rgba(94, 106, 210, .26);
+  border-radius: var(--radius-md);
+  color: var(--primary-light);
+  display: flex;
+  flex: 0 0 auto;
+  font-size: 1.25rem;
+  height: 44px;
+  justify-content: center;
+  width: 44px;
+}
+
+.account-dialog-close {
+  align-items: center;
+  background: rgba(255, 255, 255, .045);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  display: flex;
+  flex: 0 0 auto;
+  height: 38px;
+  justify-content: center;
+  width: 38px;
+}
+
+.account-dialog-close:hover {
+  color: var(--text-primary);
+}
+
+.account-password-form {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-6);
+}
+
+.account-field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.account-field span {
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+}
+
+.account-field input {
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 16px;
+  min-height: 48px;
+  padding: 0 var(--space-4);
+  width: 100%;
+}
+
+.account-field input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(94, 106, 210, .14);
+  outline: none;
+}
+
+.account-password-hint {
+  align-items: center;
+  display: flex;
+  font-size: var(--fs-xs);
+  gap: var(--space-2);
+}
+
+.account-password-feedback {
+  border-radius: var(--radius-md);
+  display: none;
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  padding: var(--space-3) var(--space-4);
+}
+
+.account-password-feedback.is-error,
+.account-password-feedback.is-success {
+  display: block;
+}
+
+.account-password-feedback.is-error {
+  background: var(--error-light);
+  border: 1px solid rgba(255, 107, 122, .22);
+  color: var(--error);
+}
+
+.account-password-feedback.is-success {
+  background: rgba(85, 214, 190, .1);
+  border: 1px solid rgba(85, 214, 190, .22);
+  color: var(--accent-reading);
+}
+
+.account-dialog-actions {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr 1.5fr;
+  margin-top: var(--space-2);
+}
+
+.account-dialog-actions .btn {
+  width: 100%;
+}
+
+.account-dialog-actions .btn:disabled {
+  cursor: wait;
+  opacity: .7;
+}
+
+.account-dialog-actions .spin {
+  animation: spin 1s linear infinite;
+}
+
+@media (max-width: 520px) {
+  .account-modal {
+    align-items: flex-end;
+    padding: max(10px, env(safe-area-inset-top)) 0 0;
+  }
+
+  .account-dialog {
+    border-bottom: 0;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    max-height: calc(100dvh - max(10px, env(safe-area-inset-top)));
+    padding-bottom: env(safe-area-inset-bottom);
+    width: 100%;
+  }
+
+  .account-dialog-header,
+  .account-password-form {
+    padding: var(--space-5);
+  }
+
+  .account-dialog-heading {
+    align-items: flex-start;
+  }
+
+  .account-dialog-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .account-dialog-actions .btn {
+    min-height: 48px;
+  }
+}
