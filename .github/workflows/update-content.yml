@@ -1,4 +1,4 @@
-name: 🔄 Cập nhật đề thi từ Aptiskey.com
+name: 🔄 Cập nhật nội dung công khai từ Aptiskey.com
 
 on:
   # Chạy tự động mỗi ngày lúc 2 giờ sáng (giờ VN = UTC+7 → 19:00 UTC ngày trước)
@@ -21,7 +21,7 @@ jobs:
       - name: 🔧 Cài đặt curl
         run: sudo apt-get update && sudo apt-get install -y curl
 
-      - name: 🚀 Chạy script cập nhật đề
+      - name: 🚀 Cập nhật nội dung public và Speaking
         env:
           APTISKEY_EMAIL: ${{ secrets.APTISKEY_EMAIL }}
           APTISKEY_PASSWORD: ${{ secrets.APTISKEY_PASSWORD }}
@@ -48,5 +48,5 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add public/crawled_data/
           CHANGED_COUNT=$(git diff --cached --name-only | wc -l)
-          git commit -m "chore: auto-update $CHANGED_COUNT exam files [$(date +'%Y-%m-%d %H:%M')]"
+          git commit -m "chore: auto-update $CHANGED_COUNT public content files [$(date +'%Y-%m-%d %H:%M')]"
           git push
