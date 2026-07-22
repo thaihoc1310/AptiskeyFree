@@ -427,10 +427,6 @@ function interceptLegacyNavigation() {
 
 function prepareLegacyDom(config) {
   const isListeningKey = /\/listeningkey\d{3}\.html$/.test(config.htmlPath || '');
-  if (isListeningKey) {
-    const contentEl = document.getElementById('legacyContent');
-    contentEl?.classList.add('listening-test-mode');
-  }
 
   const normalize = () => {
     lockJumpInputs();

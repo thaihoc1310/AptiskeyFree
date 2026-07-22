@@ -1483,13 +1483,6 @@ body.focus-mode .app-content {
   }
 }
 
-.legacy-content.listening-test-mode [id^="showTranscriptButton"],
-.legacy-content.listening-test-mode [id*="showTranscriptButton"],
-.legacy-content.listening-test-mode [id^="transcriptBox"],
-.legacy-content.listening-test-mode [id*="transcriptBox"] {
-  display: none !important;
-}
-
 .legacy-content [id^="q16_opinion"][id$="_label"] {
   font-weight: 600 !important;
   font-size: 1.05rem !important;
