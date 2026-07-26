@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", function () {
     { date: "26/5/2026", text:  "Thêm một số đề mới listening Q1-13!. <a href='listening_question1_13.html' target='_blank'>Xem tại đây</a>" },
     { date: "25/5/2026", text:  "Thêm đề mới listening Q1-13 mới cập nhật từ câu 192!. <a href='listening_question1_13.html' target='_blank'>Xem tại đây</a>" },
     { date: "08/5/2026", text:  "Thêm câu listening question 15, câu Home schooling!. <a href='listening_meo_cau15_method2.html' target='_blank'>Xem tại đây</a>" },
-    { date: "15/4/2026", text:  "Thêm chức năng review đề từ người đã thi. <a href='exam-review.html' target='_blank'>Xem tại đây</a>" },
+    { date: "15/4/2026", text:  "Thêm chức năng review đề từ người đã thi." },
     { date: "12/4/2026", text:  "Thêm tính năng học mẹo Reading question 5 để dễ nhớ hơn. <a href='reading_question5_meo.html' target='_blank'>Xem tại đây</a>" },
     { date: "12/4/2026", text:  "Listening: Thêm 1 số đề cho question 16 & 17. <a href='listening_question16_17.html' target='_blank'>Xem tại đây</a>" },
     { date: "11/4/2026", text:  "Reading: Phần học theo bộ đề bổ sung thêm bộ đề 12. <a href='reading012.html' target='_blank'>Xem tại đây</a>" },
